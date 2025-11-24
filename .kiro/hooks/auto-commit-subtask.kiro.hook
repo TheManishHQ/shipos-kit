@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Auto-commit Subtask",
+  "description": "Automatically commits changes to git when a subtask is completed",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A subtask has been completed. Please review the changes made and commit them to git with an appropriate commit message that describes what was accomplished in this subtask. Use 'git add .' to stage all changes, then 'git commit -m \"your message\"' to commit."
+  }
+}

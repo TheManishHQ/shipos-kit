@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "name": "Source to Docs Sync",
+  "description": "Monitors all source files in the repository and automatically updates or creates corresponding documentation in the /docs folder when changes are detected",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.prisma",
+      "**/*.json",
+      "!**/node_modules/**",
+      "!**/.next/**",
+      "!**/dist/**",
+      "!**/.turbo/**"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source files have been modified. Review the changes and update or create corresponding documentation in the /docs folder. If /docs doesn't exist, create it. For each changed file, determine what documentation should exist and either update existing docs or create new documentation files that explain the purpose, usage, and API of the changed code. Ensure documentation is clear, comprehensive, and follows best practices."
+  }
+}
