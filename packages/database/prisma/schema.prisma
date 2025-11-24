@@ -34,7 +34,6 @@ model User {
     
     sessions           Session[]
     accounts           Account[]
-    passkeys           Passkey[]
     purchases          Purchase[]
     twofactors         TwoFactor[]
     aiChats            AiChat[]
@@ -45,8 +44,6 @@ model User {
 model Session {
     id             String   @id @default(cuid())
     expiresAt      DateTime
-    ipAddress      String?
-    userAgent      String?
     userId         String
     user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     impersonatedBy String?
