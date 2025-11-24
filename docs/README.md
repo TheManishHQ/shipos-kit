@@ -4,15 +4,30 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 
 ## Documentation Structure
 
+### Getting Started
+
+-   [Setup Guide](./setup.md) - Installation and initial setup
+-   [Development Guide](./development.md) - Development workflow and best practices
+
+### Core Systems
+
 -   [Authentication](./authentication.md) - Authentication system with better-auth
 -   [Database](./database.md) - Prisma database setup and schema
 -   [Configuration](./configuration.md) - Application configuration and feature flags
--   [API](./api.md) - Type-safe API with ORPC (coming soon)
--   [Payments](./payments.md) - Payment provider integration (coming soon)
--   [AI](./ai.md) - AI chat system with OpenAI (coming soon)
--   [Email](./email.md) - Email system and templates (coming soon)
--   [Storage](./storage.md) - File storage with S3 (coming soon)
--   [Internationalization](./i18n.md) - Multi-language support (coming soon)
+
+### Utilities
+
+-   [Utilities](./utilities.md) - Shared utility functions and helpers
+-   [Logging](./logging.md) - Structured logging system
+
+### Coming Soon
+
+-   [API](./api.md) - Type-safe API with ORPC
+-   [Payments](./payments.md) - Payment provider integration
+-   [AI](./ai.md) - AI chat system with OpenAI
+-   [Email](./email.md) - Email system and templates
+-   [Storage](./storage.md) - File storage with S3
+-   [Internationalization](./i18n.md) - Multi-language support
 
 ## Quick Start
 
