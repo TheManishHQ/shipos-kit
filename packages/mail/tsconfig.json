@@ -1,0 +1,13 @@
+{
+	"extends": "@repo/tsconfig/react-library.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"paths": {
+			"@shipos/config": ["../../config"],
+			"@shipos/i18n": ["../i18n"],
+			"@shipos/logs": ["../logs"]
+		}
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": ["node_modules", "dist"]
+}
