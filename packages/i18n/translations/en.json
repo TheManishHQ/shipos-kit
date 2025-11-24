@@ -1,0 +1,37 @@
+{
+	"common": {
+		"loading": "Loading...",
+		"error": "An error occurred",
+		"success": "Success"
+	},
+	"mail": {
+		"common": {
+			"openLinkInBrowser": "If you want to open the link in a different browser than your default one, copy and paste this link:",
+			"useLink": "or use the following link:"
+		},
+		"emailVerification": {
+			"body": "Hey,\nplease click the link below to verify this new email address.",
+			"confirmEmail": "Verify email",
+			"subject": "Verify your email"
+		},
+		"forgotPassword": {
+			"body": "Hey,\nyou requested a password reset.\n\nClick the button below to reset your password.",
+			"resetPassword": "Reset password",
+			"subject": "Reset your password"
+		},
+		"magicLink": {
+			"body": "Hey,\nyou requested a login email.\n\nClick the link below to login.",
+			"login": "Login",
+			"subject": "Login link"
+		},
+		"newUser": {
+			"body": "Hey,\nthanks for signing up.\n\nTo start using our app, please confirm your email address by clicking the link below.",
+			"confirmEmail": "Confirm email",
+			"subject": "Confirm your email"
+		},
+		"newsletterSignup": {
+			"body": "Thank you for signing up for the newsletter. We will keep you updated with the latest news and updates.",
+			"subject": "Welcome to our newsletter"
+		}
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"common": {
+		"loading": "Laden...",
+		"error": "Ein Fehler ist aufgetreten",
+		"success": "Erfolgreich"
+	},
+	"mail": {
+		"common": {
+			"openLinkInBrowser": "Wenn Sie den Link in einem anderen Browser als Ihrem Standardbrowser öffnen möchten, kopieren Sie diesen Link und fügen Sie ihn ein:",
+			"useLink": "oder verwenden Sie den folgenden Link:"
+		},
+		"emailVerification": {
+			"body": "Hallo,\nbitte klicken Sie auf den Link unten, um diese neue E-Mail-Adresse zu bestätigen.",
+			"confirmEmail": "E-Mail bestätigen",
+			"subject": "Bestätigen Sie Ihre E-Mail"
+		},
+		"forgotPassword": {
+			"body": "Hallo,\nSie haben ein Zurücksetzen des Passworts angefordert.\n\nKlicken Sie auf die Schaltfläche unten, um Ihr Passwort zurückzusetzen.",
+			"resetPassword": "Passwort zurücksetzen",
+			"subject": "Setzen Sie Ihr Passwort zurück"
+		},
+		"magicLink": {
+			"body": "Hallo,\nSie haben eine Anmelde-E-Mail angefordert.\n\nKlicken Sie auf den Link unten, um sich anzumelden.",
+			"login": "Anmelden",
+			"subject": "Anmeldelink"
+		},
+		"newUser": {
+			"body": "Hallo,\nvielen Dank für Ihre Anmeldung.\n\nUm unsere App zu nutzen, bestätigen Sie bitte Ihre E-Mail-Adresse, indem Sie auf den Link unten klicken.",
+			"confirmEmail": "E-Mail bestätigen",
+			"subject": "Bestätigen Sie Ihre E-Mail"
+		},
+		"newsletterSignup": {
+			"body": "Vielen Dank für die Anmeldung zum Newsletter. Wir halten Sie über die neuesten Nachrichten und Updates auf dem Laufenden.",
+			"subject": "Willkommen zu unserem Newsletter"
+		}
+	}
+}
