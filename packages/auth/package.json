@@ -1,0 +1,21 @@
+{
+	"name": "@shipos/auth",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./index.ts",
+	"types": "./**/.tsx",
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@shipos/config": "workspace:*",
+		"@shipos/database": "workspace:*",
+		"better-auth": "^1.3.7",
+		"cookie": "^1.0.2"
+	},
+	"devDependencies": {
+		"@repo/tsconfig": "workspace:*",
+		"@types/node": "^24.3.1",
+		"typescript": "5.9.2"
+	}
+}

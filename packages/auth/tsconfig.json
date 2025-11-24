@@ -1,0 +1,12 @@
+{
+	"extends": "@repo/tsconfig/base.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"paths": {
+			"@shipos/config": ["../../config"],
+			"@shipos/database": ["../../packages/database"]
+		}
+	},
+	"include": ["**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}
