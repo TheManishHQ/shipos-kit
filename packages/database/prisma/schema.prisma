@@ -1,0 +1,148 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+    output   = "./generated/client"
+}
+
+generator zod {
+    provider = "prisma-zod-generator"
+    output   = "./zod"
+    config   = "./zod-generator.config.json"
+}
+
+model User {
+    id                 String       @id @default(cuid())
+    name               String
+    email              String       @unique
+    emailVerified      Boolean      @default(false)
+    image              String?
+    username           String?      @unique
+    role               String?
+    banned             Boolean      @default(false)
+    banReason          String?
+    banExpires         DateTime?
+    onboardingComplete Boolean      @default(false)
+    paymentsCustomerId String?
+    locale             String?
+    twoFactorEnabled   Boolean      @default(false)
+    createdAt          DateTime     @default(now())
+    updatedAt          DateTime     @updatedAt
+    
+    sessions           Session[]
+    accounts           Account[]
+    passkeys           Passkey[]
+    purchases          Purchase[]
+    twofactors         TwoFactor[]
+    aiChats            AiChat[]
+
+    @@map("user")
+}
+
+model Session {
+    id             String   @id @default(cuid())
+    expiresAt      DateTime
+    ipAddress      String?
+    userAgent      String?
+    userId         String
+    user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    impersonatedBy String?
+    token          String   @unique
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+
+    @@map("session")
+}
+
+model Account {
+    id                    String    @id @default(cuid())
+    accountId             String
+    providerId            String
+    userId                String
+    user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    accessToken           String?   @db.Text
+    refreshToken          String?   @db.Text
+    idToken               String?   @db.Text
+    password              String?
+    expiresAt             DateTime?
+    accessTokenExpiresAt  DateTime?
+    refreshTokenExpiresAt DateTime?
+    scope                 String?
+    createdAt             DateTime  @default(now())
+    updatedAt             DateTime  @updatedAt
+
+    @@map("account")
+}
+
+model Verification {
+    id         String    @id @default(cuid())
+    identifier String
+    value      String    @db.Text
+    expiresAt  DateTime
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+
+    @@map("verification")
+}
+
+model Passkey {
+    id           String   @id @default(cuid())
+    name         String?
+    publicKey    String
+    userId       String
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    credentialID String
+    counter      Int
+    deviceType   String
+    backedUp     Boolean
+    transports   String?
+    createdAt    DateTime @default(now())
+
+    @@map("passkey")
+}
+
+model TwoFactor {
+    id          String @id @default(cuid())
+    secret      String
+    backupCodes String
+    userId      String @unique
+    user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("twoFactor")
+}
+
+enum PurchaseType {
+    SUBSCRIPTION
+    ONE_TIME
+}
+
+model Purchase {
+    id             String       @id @default(cuid())
+    userId         String?
+    user           User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    type           PurchaseType
+    customerId     String
+    subscriptionId String?      @unique
+    productId      String
+    status         String?
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @updatedAt
+
+    @@index([subscriptionId])
+    @@map("purchase")
+}
+
+model AiChat {
+    id        String   @id @default(cuid())
+    userId    String?
+    user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    title     String?
+    messages  Json     @default("[]")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("ai_chat")
+}

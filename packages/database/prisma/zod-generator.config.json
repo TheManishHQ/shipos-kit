@@ -1,0 +1,9 @@
+{
+	"useDecimalJs": false,
+	"imports": null,
+	"prismaJsonNullability": true,
+	"modelCase": "PascalCase",
+	"modelSuffix": "Schema",
+	"useTypeAssertions": false,
+	"coerceDate": true
+}
