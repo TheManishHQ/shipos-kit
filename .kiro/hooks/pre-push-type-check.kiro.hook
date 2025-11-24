@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Pre-Push Type Check",
+  "description": "Automatically runs TypeScript type checking before git push to ensure type safety and verify the project builds successfully",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/tsconfig.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "TypeScript files have been modified. Before pushing to git, please run type checking with `pnpm tsc --noEmit` across all packages and verify the build succeeds with `pnpm build`. Report any type errors or build failures that need to be fixed before the code can be pushed."
+  }
+}

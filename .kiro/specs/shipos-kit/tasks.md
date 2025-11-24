@@ -46,7 +46,7 @@
     -   Export typed configuration for use across packages
     -   _Requirements: 25.1, 25.2, 25.3, 25.4, 25.5, 25.6, 25.7, 25.8, 25.9_
 
--   [ ] 6. Set up authentication system with better-auth
+-   [x] 6. Set up authentication system with better-auth
 
     -   Install better-auth v1.3.7 in packages/auth/
     -   Configure better-auth with Prisma adapter
