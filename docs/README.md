@@ -2,11 +2,18 @@
 
 Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter kit built with Next.js 15, React 19, and TypeScript.
 
+## ⚠️ Important: Read This First
+
+**This project is ~35% complete.** See [CURRENT_STATUS.md](../CURRENT_STATUS.md) for an honest assessment.
+
 ## Documentation Structure
+
+📖 **New to the docs?** Read [About This Documentation](./about-documentation.md) to understand how the documentation is organized.
 
 ### Getting Started
 
--   [Implementation Status](./implementation-status.md) - **READ THIS FIRST** - What's actually working ⚠️
+-   [Current Status](../CURRENT_STATUS.md) - **READ THIS FIRST** - Honest assessment ⚠️
+-   [Implementation Status](./implementation-status.md) - Detailed breakdown of what's working
 -   [Quick Start Guide](./quick-start.md) - Get up and running in minutes ⚡
 -   [Setup Guide](./setup.md) - Detailed installation and initial setup
 -   [Development Guide](./development.md) - Development workflow and best practices
