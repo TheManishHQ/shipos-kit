@@ -1,6 +1,5 @@
 "use client";
 
-import { authClient } from "@repo/auth/client";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { Button } from "@ui/components/button";
@@ -18,31 +17,33 @@ export function SetPasswordForm() {
 
 		setSubmitting(true);
 
-		await authClient.forgetPassword(
-			{
-				email: user.email,
-				redirectTo: `${window.location.origin}/auth/reset-password`,
-			},
-			{
-				onSuccess: () => {
-					toast.success(
-						t(
-							"settings.account.security.setPassword.notifications.success"
-						)
-					);
+		try {
+			// Send password reset email via better-auth API
+			const response = await fetch("/api/auth/forget-password", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
 				},
-				onError: () => {
-					toast.error(
-						t(
-							"settings.account.security.setPassword.notifications.error"
-						)
-					);
-				},
-				onResponse: () => {
-					setSubmitting(false);
-				},
+				body: JSON.stringify({
+					email: user.email,
+					redirectTo: `${window.location.origin}/auth/reset-password`,
+				}),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to send reset email");
 			}
-		);
+
+			toast.success(
+				t("settings.account.security.setPassword.notifications.success")
+			);
+		} catch (error) {
+			toast.error(
+				t("settings.account.security.setPassword.notifications.error")
+			);
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	return (
