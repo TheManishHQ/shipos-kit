@@ -39,10 +39,13 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 -   [Email](./email.md) - Email system and templates (✅ Implemented)
 -   [Internationalization](./i18n.md) - Multi-language support with next-intl (✅ Implemented)
 
+### Payments & Subscriptions
+
+-   [Payments](./payments.md) - Payment provider integration with Stripe (✅ Implemented)
+
 ### Coming Soon
 
 -   [API](./api.md) - Type-safe API with ORPC
--   [Payments](./payments.md) - Payment provider integration
 -   [AI](./ai.md) - AI chat system with OpenAI
 
 ## Quick Start

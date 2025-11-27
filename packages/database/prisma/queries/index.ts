@@ -1,4 +1,4 @@
-import { prisma } from '../client'
+import { prisma } from "../client";
 
 export const queries = {
     user: {
@@ -11,7 +11,10 @@ export const queries = {
     purchase: {
         findActiveSubscription: (userId: string) =>
             prisma.purchase.findFirst({
-                where: { userId, type: 'SUBSCRIPTION', status: 'active' },
+                where: { userId, type: "SUBSCRIPTION", status: "active" },
             }),
     },
-}
+};
+
+export * from "./purchases";
+export * from "./users";

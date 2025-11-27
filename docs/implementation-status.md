@@ -98,6 +98,26 @@ This document provides an accurate overview of what's currently implemented and 
 -   Cloudflare R2
 -   MinIO
 -   DigitalOcean Spaces
+
+### Payments System (Task 17)
+
+-   ✅ Payment provider abstraction
+-   ✅ Stripe integration
+-   ✅ Checkout session creation
+-   ✅ Customer portal links
+-   ✅ Subscription management
+-   ✅ Webhook handling
+-   ✅ Purchase tracking in database
+-   ✅ One-time and recurring payments
+-   ✅ Trial period support
+-   ✅ Seat/license management
+
+**Webhook Events:**
+
+-   `checkout.session.completed`
+-   `customer.subscription.created`
+-   `customer.subscription.updated`
+-   `customer.subscription.deleted`
 -   Backblaze B2
 
 ### Internationalization (Task 17)
