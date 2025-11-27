@@ -1,0 +1,27 @@
+{
+	"name": "@shipos/payments",
+	"version": "0.0.0",
+	"private": true,
+	"exports": {
+		".": {
+			"types": "./index.ts",
+			"default": "./index.ts"
+		},
+		"./types": "./types.ts"
+	},
+	"dependencies": {
+		"@shipos/config": "workspace:*",
+		"@shipos/database": "workspace:*",
+		"@shipos/logs": "workspace:*",
+		"stripe": "^18.5.0",
+		"zod": "^3.24.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.2",
+		"@types/node": "^22.10.2",
+		"typescript": "^5.7.2"
+	},
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	}
+}
