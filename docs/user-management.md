@@ -546,12 +546,17 @@ export const createAvatarUploadUrl = protectedProcedure
 **Usage Example:**
 
 ```typescript
-import { orpc } from "@shared/lib/orpc-query-utils";
-
-const { signedUploadUrl } = await orpc.users.avatarUploadUrl.mutate({
-	path: "user-123-abc.png",
-	bucket: "avatars",
+// Request signed upload URL
+const response = await fetch("/api/storage/upload-url", {
+	method: "POST",
+	headers: { "Content-Type": "application/json" },
+	body: JSON.stringify({
+		path: "user-123-abc.png",
+		bucket: "avatars",
+	}),
 });
+
+const { signedUploadUrl } = await response.json();
 
 // Upload file to S3
 await fetch(signedUploadUrl, {

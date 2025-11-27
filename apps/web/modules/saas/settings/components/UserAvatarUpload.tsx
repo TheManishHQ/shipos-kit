@@ -5,7 +5,6 @@ import { config } from "@config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { Spinner } from "@shared/components/Spinner";
 import { UserAvatar } from "@shared/components/UserAvatar";
-import { orpc } from "@shared/lib/orpc-query-utils";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -24,11 +23,17 @@ export function UserAvatarUpload({
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
 	const [image, setImage] = useState<File | null>(null);
 
-	// TODO: This will work once Task 23 (ORPC API infrastructure) is implemented
-	// @ts-expect-error - orpc.users.avatarUploadUrl will be available after Task 23
-	const getSignedUploadUrlMutation = useMutation(
-		orpc.users.avatarUploadUrl.mutationOptions()
-	);
+	const getSignedUploadUrlMutation = useMutation({
+		mutationFn: async (input: { path: string; bucket: string }) => {
+			const response = await fetch("/api/storage/upload-url", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(input),
+			});
+			if (!response.ok) throw new Error("Failed to get upload URL");
+			return response.json() as Promise<{ signedUploadUrl: string }>;
+		},
+	});
 
 	const { getRootProps, getInputProps } = useDropzone({
 		onDrop: (acceptedFiles) => {
@@ -53,12 +58,11 @@ export function UserAvatarUpload({
 		setUploading(true);
 		try {
 			const path = `${user.id}-${uuid()}.png`;
-			// @ts-expect-error - API will be available after Task 23
 			const { signedUploadUrl } =
-				(await getSignedUploadUrlMutation.mutateAsync({
+				await getSignedUploadUrlMutation.mutateAsync({
 					path,
 					bucket: config.storage.bucketNames.avatars,
-				})) as { signedUploadUrl: string };
+				});
 
 			const response = await fetch(signedUploadUrl, {
 				method: "PUT",

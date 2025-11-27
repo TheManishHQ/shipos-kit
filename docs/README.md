@@ -24,13 +24,16 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 -   [Utilities](./utilities.md) - Shared utility functions and helpers
 -   [Logging](./logging.md) - Structured logging system
 
+### Infrastructure
+
+-   [Storage](./storage.md) - File storage with S3-compatible providers (✅ Implemented)
+
 ### Coming Soon
 
 -   [API](./api.md) - Type-safe API with ORPC
 -   [Payments](./payments.md) - Payment provider integration
 -   [AI](./ai.md) - AI chat system with OpenAI
 -   [Email](./email.md) - Email system and templates
--   [Storage](./storage.md) - File storage with S3
 -   [Internationalization](./i18n.md) - Multi-language support
 
 ## Quick Start

@@ -141,7 +141,7 @@
     -   Create email sending service with template rendering
     -   _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5, 13.6, 13.7, 13.8_
 
--   [ ] 16. Implement storage system
+-   [x] 16. Implement storage system
 
     -   Create storage provider abstraction in packages/storage/
     -   Implement S3 storage provider with AWS SDK
