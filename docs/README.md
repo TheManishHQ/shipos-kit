@@ -20,6 +20,7 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 ### Development Tools
 
 -   [Biome](./biome.md) - Linting and formatting with Biome
+-   [TypeScript](./typescript.md) - TypeScript configuration and path aliases
 -   [Utilities](./utilities.md) - Shared utility functions and helpers
 -   [Logging](./logging.md) - Structured logging system
 

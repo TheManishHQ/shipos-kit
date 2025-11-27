@@ -209,7 +209,14 @@ shipos-kit/
 │   └── web/              # Next.js application
 │       ├── app/          # App Router pages
 │       ├── components/   # React components
-│       └── lib/          # Utilities
+│       ├── lib/          # Utilities
+│       └── modules/      # Feature modules
+│           ├── analytics/    # Analytics integration
+│           ├── marketing/    # Marketing pages
+│           ├── saas/         # SaaS application
+│           ├── ui/           # UI components
+│           ├── i18n/         # Internationalization
+│           └── shared/       # Shared utilities
 ├── packages/
 │   ├── auth/             # Authentication
 │   ├── database/         # Prisma database

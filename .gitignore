@@ -29,7 +29,6 @@ dist
 *.pem
 
 # IDE
-.vscode
 .idea
 
 # debug

@@ -51,16 +51,17 @@ dist
 #### IDE and System Files
 
 ```gitignore
-.vscode
 .idea
 .DS_Store
 ```
 
-**Why:** IDE configurations and system files are user-specific and shouldn't be shared across the team.
+**Why:** IDE configurations (except VS Code) and system files are user-specific and shouldn't be shared across the team.
 
 **Note:**
 
--   If you want to share IDE settings, create a `.vscode/settings.json.example` file instead
+-   The `.vscode/` directory is now committed to the repository with recommended settings
+-   This ensures consistent editor configuration across the team
+-   You can still customize settings locally if needed
 -   `.husky/` hooks are committed to ensure consistent pre-commit checks across the team
 
 #### Debug Logs
@@ -376,7 +377,7 @@ git commit --no-verify -m "message"
 
 ### IDE Integration
 
-**VS Code:**
+#### VS Code
 
 Install the [Biome extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome):
 
@@ -384,7 +385,9 @@ Install the [Biome extension](https://marketplace.visualstudio.com/items?itemNam
 code --install-extension biomejs.biome
 ```
 
-**Settings:**
+**Recommended Settings:**
+
+The project includes a `.vscode/settings.json` file with recommended settings:
 
 ```json
 {
@@ -393,11 +396,25 @@ code --install-extension biomejs.biome
 	"editor.codeActionsOnSave": {
 		"quickfix.biome": "explicit",
 		"source.organizeImports.biome": "explicit"
-	}
+	},
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"typescript.autoClosingTags": false
 }
 ```
 
-**Other IDEs:**
+**Settings Explanation:**
+
+-   `editor.defaultFormatter` - Use Biome for formatting
+-   `editor.formatOnSave` - Auto-format on save
+-   `editor.codeActionsOnSave` - Auto-fix and organize imports
+-   `typescript.tsdk` - Use workspace TypeScript version
+-   `typescript.enablePromptUseWorkspaceTsdk` - Prompt to use workspace TS
+-   `typescript.autoClosingTags` - Disabled to prevent conflicts with Biome formatting
+
+**Note:** The `.vscode/settings.json` file is now committed to the repository to ensure consistent settings across the team. You can customize it locally if needed.
+
+#### Other IDEs
 
 -   [JetBrains IDEs](https://biomejs.dev/guides/integrate-in-editor/#jetbrains-ides)
 -   [Neovim](https://biomejs.dev/guides/integrate-in-editor/#neovim)
