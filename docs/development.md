@@ -2,6 +2,8 @@
 
 This guide covers development workflows, best practices, and project conventions for Shipos Kit.
 
+⚠️ **Note:** See [Implementation Status](./implementation-status.md) for what features are currently implemented.
+
 ## Version Control
 
 ### Git Ignore Configuration

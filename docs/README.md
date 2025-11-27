@@ -6,6 +6,7 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 
 ### Getting Started
 
+-   [Implementation Status](./implementation-status.md) - **READ THIS FIRST** - What's actually working ⚠️
 -   [Quick Start Guide](./quick-start.md) - Get up and running in minutes ⚡
 -   [Setup Guide](./setup.md) - Detailed installation and initial setup
 -   [Development Guide](./development.md) - Development workflow and best practices
@@ -86,29 +87,35 @@ shipos-kit/
 └── tooling/              # Shared tooling configs
 ```
 
-## Key Features
+## ⚠️ Project Status: ~35% Complete
 
-### ✅ Implemented
+**This is a work-in-progress foundation, not a complete SaaS starter kit.**
+
+See [Implementation Status](./implementation-status.md) for detailed breakdown.
+
+### ✅ What's Working (Backend/Infrastructure)
 
 -   🔐 **Authentication** - Email/password, magic links, OAuth (Google, GitHub), passkeys
 -   📧 **Email** - Transactional emails with React Email and Resend
 -   📦 **Storage** - S3-compatible file storage with presigned URLs
 -   🌍 **i18n** - Multi-language support with next-intl (English, German)
--   👤 **User Management** - Profile updates, avatar upload, session management
--   🗄️ **Database** - Prisma ORM with PostgreSQL
--   🎨 **UI** - Shadcn UI + Radix UI + Tailwind CSS 4
--   🔒 **Security** - Session management, input validation, secure file uploads
+-   👤 **User Management** - Profile updates, avatar upload, session management (backend only)
+-   🗄️ **Database** - Prisma ORM with PostgreSQL (complete schema)
 -   ⚙️ **Configuration** - Centralized config with feature flags
 -   📝 **Logging** - Structured JSON logging
 -   🛠️ **Development** - Biome for linting/formatting, TypeScript strict mode
 
-### 🚧 Coming Soon
+### ❌ What's Missing (Frontend/Features)
 
--   💳 **Payments** - Stripe and DodoPayments integration
--   🤖 **AI** - OpenAI integration for chat and image generation
--   🔌 **API** - Type-safe API with ORPC
--   👥 **Admin Panel** - User management and moderation (optional)
--   🧪 **Testing** - E2E tests with Playwright
+-   🚫 **No Dashboard** - No SaaS application pages
+-   🚫 **No Settings UI** - Backend works, but no frontend pages
+-   🚫 **No UI Components** - No Shadcn UI component library
+-   🚫 **No Theme Switcher** - No dark mode functionality
+-   🚫 **No Marketing Pages** - No homepage, pricing, blog
+-   🚫 **No Payments** - Stripe/DodoPayments not integrated
+-   🚫 **No AI** - OpenAI not integrated
+-   🚫 **No API** - ORPC not set up
+-   🚫 **No Tests** - No test suite
 
 ## Development
 

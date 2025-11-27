@@ -2,6 +2,15 @@
 
 Get up and running with Shipos Kit in minutes.
 
+## ⚠️ Important: Read This First
+
+**This project is ~35% complete.** The backend infrastructure is solid, but there are **no frontend pages** yet (no dashboard, no settings UI, no marketing pages).
+
+**What works:** Authentication, email, storage, i18n (all backend)  
+**What doesn't work:** User-facing pages, payments, AI, UI components
+
+See [Implementation Status](./implementation-status.md) for full details.
+
 ## Prerequisites
 
 -   Node.js 18+ and pnpm
@@ -99,39 +108,64 @@ The application will be available at:
 -   **Web App**: http://localhost:3000
 -   **API**: http://localhost:3000/api
 
-## What's Included
+## Implementation Status
 
-### Authentication
+⚠️ **Important:** This project is ~35% complete. See [Implementation Status](./implementation-status.md) for a detailed breakdown of what's working and what's not.
 
-Out of the box, you get:
+## What Actually Works
 
--   ✅ Email/password authentication
--   ✅ Email verification
--   ✅ Password reset flow
--   ✅ Magic link (passwordless) login
--   ✅ OAuth (Google, GitHub)
--   ✅ Passkey/WebAuthn support
--   ✅ Session management
+### ✅ Backend/API (Fully Functional)
 
-**Try it:**
+-   Authentication API endpoints (`/api/auth/*`)
+-   Email sending (console in dev, Resend in prod)
+-   File storage (S3-compatible)
+-   Database with complete schema
+-   Internationalization system
+-   User management API
 
-1. Go to http://localhost:3000/auth/signup
-2. Create an account
-3. Check console for verification email (development mode)
+### ❌ Frontend/UI (Not Implemented)
 
-### User Management
+-   **No login/signup pages** - Auth pages don't exist
+-   **No dashboard** - `/app` routes don't exist
+-   **No settings pages** - `/app/settings` doesn't exist
+-   **No UI components** - No component library
+-   **No theme switcher** - No dark mode UI
 
--   ✅ Profile updates (name, email)
--   ✅ Avatar upload with cropping
--   ✅ Password management
--   ✅ Active sessions view
--   ✅ Connected accounts
+### How to Test What Works
 
-**Try it:**
+**Test Authentication API:**
 
-1. Sign in to your account
-2. Go to http://localhost:3000/app/settings
-3. Update your profile, upload an avatar
+```bash
+# better-auth provides these endpoints automatically:
+curl http://localhost:3000/api/auth/session
+curl http://localhost:3000/api/auth/list-sessions
+
+# See all available endpoints:
+# /api/auth/sign-up
+# /api/auth/sign-in
+# /api/auth/sign-out
+# /api/auth/callback/google
+# /api/auth/callback/github
+```
+
+**Test Email System:**
+
+```bash
+# Start dev server
+pnpm dev
+
+# Trigger an auth flow (via API)
+# Check console for email output
+```
+
+**Test Database:**
+
+```bash
+# Open Prisma Studio
+pnpm db:studio
+
+# View at http://localhost:5555
+```
 
 ### Email System
 

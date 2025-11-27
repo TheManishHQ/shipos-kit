@@ -2,6 +2,8 @@
 
 This guide walks you through setting up Shipos Kit for development.
 
+⚠️ **Important:** This project is ~35% complete. See [Implementation Status](./implementation-status.md) for what's actually working before you begin.
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
