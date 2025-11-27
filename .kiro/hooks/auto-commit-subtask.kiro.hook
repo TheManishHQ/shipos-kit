@@ -6,11 +6,14 @@
   "when": {
     "type": "fileEdited",
     "patterns": [
-      "**/*"
+      "**/*",
+      "**/*.md"
     ]
   },
   "then": {
     "type": "askAgent",
     "prompt": "A subtask has been completed. Please review the changes made and commit them to git with an appropriate commit message that describes what was accomplished in this subtask. Use 'git add .' to stage all changes, then 'git commit -m \"your message\"' to commit."
-  }
+  },
+  "workspaceFolderName": "ship-framework",
+  "shortName": "auto-commit-subtask"
 }
