@@ -1,7 +1,7 @@
 "use client";
 
 import { authClient } from "@repo/auth/client";
-import { config } from "@repo/config";
+import { config } from "@config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { Spinner } from "@shared/components/Spinner";
 import { UserAvatar } from "@shared/components/UserAvatar";
@@ -24,6 +24,8 @@ export function UserAvatarUpload({
 	const [cropDialogOpen, setCropDialogOpen] = useState(false);
 	const [image, setImage] = useState<File | null>(null);
 
+	// TODO: This will work once Task 23 (ORPC API infrastructure) is implemented
+	// @ts-expect-error - orpc.users.avatarUploadUrl will be available after Task 23
 	const getSignedUploadUrlMutation = useMutation(
 		orpc.users.avatarUploadUrl.mutationOptions()
 	);
@@ -40,19 +42,23 @@ export function UserAvatarUpload({
 		multiple: false,
 	});
 
-	if (!user) return null;
-
+	if (!user) {
+		return null;
+	}
 	const onCrop = async (croppedImageData: Blob | null) => {
-		if (!croppedImageData) return;
+		if (!croppedImageData) {
+			return;
+		}
 
 		setUploading(true);
 		try {
 			const path = `${user.id}-${uuid()}.png`;
+			// @ts-expect-error - API will be available after Task 23
 			const { signedUploadUrl } =
-				await getSignedUploadUrlMutation.mutateAsync({
+				(await getSignedUploadUrlMutation.mutateAsync({
 					path,
 					bucket: config.storage.bucketNames.avatars,
-				});
+				})) as { signedUploadUrl: string };
 
 			const response = await fetch(signedUploadUrl, {
 				method: "PUT",
