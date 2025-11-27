@@ -7,21 +7,26 @@ The user account management system provides comprehensive functionality for user
 The user account management features include:
 
 -   Profile management (name, avatar)
+-   Email change with verification
 -   Password management (change, set for OAuth users)
+-   Session management (view and revoke active sessions)
 -   Connected OAuth accounts
 -   Avatar upload with image cropping
--   Email change functionality (via better-auth)
 
 ## Architecture
 
 ```
 apps/web/modules/saas/settings/components/
 ├── ChangeNameForm.tsx           # Update user display name
+├── ChangeEmailForm.tsx          # Change email with verification
 ├── ChangePasswordForm.tsx       # Change password for existing users
 ├── SetPasswordForm.tsx          # Set password for OAuth-only users
+├── ActiveSessionsBlock.tsx      # View and revoke active sessions
+├── UserAvatarForm.tsx           # Avatar form wrapper
 ├── UserAvatarUpload.tsx         # Avatar upload with cropping
 ├── ConnectedAccountsBlock.tsx   # View and link OAuth accounts
-└── CropImageDialog.tsx          # Image cropping dialog
+├── CropImageDialog.tsx          # Image cropping dialog
+└── index.ts                     # Component exports
 
 packages/api/modules/users/
 ├── procedures/
@@ -66,6 +71,59 @@ const formSchema = z.object({
 ```typescript
 await authClient.updateUser({ name });
 ```
+
+### ChangeEmailForm
+
+Allows users to change their email address with verification.
+
+**Features:**
+
+-   Email validation with Zod
+-   Sends verification email to new address
+-   Real-time validation feedback
+-   Disabled submit until changes are made
+-   Success/error notifications
+-   Session reload after verification
+
+**Usage:**
+
+```typescript
+import { ChangeEmailForm } from "@saas/settings/components/ChangeEmailForm";
+
+function SettingsPage() {
+	return <ChangeEmailForm />;
+}
+```
+
+**Validation:**
+
+```typescript
+const formSchema = z.object({
+	email: z.string().email("Please enter a valid email address"),
+});
+```
+
+**API Integration:**
+
+```typescript
+await authClient.changeEmail({
+	newEmail: email,
+});
+```
+
+**Email Verification Flow:**
+
+1. User enters new email address
+2. System sends verification email to new address
+3. User clicks verification link in email
+4. Email is updated after verification
+5. Session is reloaded to reflect new email
+
+**Security:**
+
+-   Requires verification of new email address
+-   Old email remains active until verification
+-   Prevents email hijacking
 
 ### ChangePasswordForm
 
@@ -238,6 +296,141 @@ await authClient.updateUser({ image: path });
 -   `react-dropzone` - File upload handling
 -   `uuid` - Unique filename generation
 -   `CropImageDialog` - Image cropping component
+
+### ActiveSessionsBlock
+
+Displays and manages active user sessions across devices.
+
+**Features:**
+
+-   Lists all active sessions
+-   Shows device information (IP address, user agent)
+-   Highlights current session
+-   Revoke individual sessions
+-   Real-time session updates
+-   Loading states with skeleton UI
+
+**Usage:**
+
+```typescript
+import { ActiveSessionsBlock } from "@saas/settings/components/ActiveSessionsBlock";
+
+function SecuritySettings() {
+	return <ActiveSessionsBlock />;
+}
+```
+
+**Session Information:**
+
+Each session displays:
+
+-   **Current Session**: Labeled as "Current Session"
+-   **Other Sessions**: Shows IP address
+-   **User Agent**: Browser and device information
+-   **Revoke Button**: X icon to terminate session
+
+**API Integration:**
+
+```typescript
+// List all sessions
+const { data: sessions } = await authClient.listSessions();
+
+// Revoke a session
+await authClient.revokeSession({ token: sessionToken });
+```
+
+**Session Data Structure:**
+
+```typescript
+interface Session {
+	id: string;
+	token: string;
+	userId: string;
+	ipAddress: string | null;
+	userAgent: string | null;
+	expiresAt: Date;
+	createdAt: Date;
+	updatedAt: Date;
+}
+```
+
+**Revoke Session Flow:**
+
+1. User clicks revoke button (X icon)
+2. System calls `authClient.revokeSession()`
+3. Session is deleted from database
+4. Success notification is shown
+5. Session list is refreshed
+6. If revoking current session, user is logged out
+
+**Security Features:**
+
+-   Cannot revoke current session accidentally (requires logout)
+-   Shows device information for security awareness
+-   Immediate session termination
+-   Automatic query invalidation after revocation
+
+**UI States:**
+
+-   **Loading**: Shows skeleton loaders
+-   **Loaded**: Displays session list with device info
+-   **Empty**: No additional sessions (only current)
+-   **Error**: Error notification via toast
+
+### UserAvatarForm
+
+Wrapper component for avatar upload functionality.
+
+**Features:**
+
+-   Integrates UserAvatarUpload component
+-   Provides consistent settings layout
+-   Handles success/error notifications
+-   Displays title and description
+
+**Usage:**
+
+```typescript
+import { UserAvatarForm } from "@saas/settings/components/UserAvatarForm";
+
+function ProfileSettings() {
+	return <UserAvatarForm />;
+}
+```
+
+**Implementation:**
+
+```typescript
+export function UserAvatarForm() {
+	const t = useTranslations();
+
+	return (
+		<SettingsItem
+			title={t("settings.account.avatar.title")}
+			description={t("settings.account.avatar.description")}
+		>
+			<UserAvatarUpload
+				onSuccess={() => {
+					toast.success(
+						t("settings.account.avatar.notifications.success")
+					);
+				}}
+				onError={() => {
+					toast.error(
+						t("settings.account.avatar.notifications.error")
+					);
+				}}
+			/>
+		</SettingsItem>
+	);
+}
+```
+
+**Benefits:**
+
+-   Consistent UI with other settings components
+-   Centralized notification handling
+-   Reusable across different settings pages
 
 ### ConnectedAccountsBlock
 

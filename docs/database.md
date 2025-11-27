@@ -71,14 +71,16 @@ model User {
 -   `emailVerified` - Timestamp of email verification
 -   `image` - Avatar URL
 -   `username` - Optional unique username
--   `role` - User role (e.g., "admin")
--   `banned` - Ban status
--   `banReason` - Reason for ban
--   `banExpires` - Ban expiration date
+-   `role` - User role (e.g., "admin") - **Optional: Only needed for role-based systems**
+-   `banned` - Ban status - **Optional: Only needed for user moderation**
+-   `banReason` - Reason for ban - **Optional: Only needed for user moderation**
+-   `banExpires` - Ban expiration date - **Optional: Only needed for user moderation**
 -   `onboardingComplete` - Onboarding completion status
 -   `paymentsCustomerId` - Payment provider customer ID
 -   `locale` - Preferred language
 -   `twoFactorEnabled` - 2FA status
+
+**Note:** The `role`, `banned`, `banReason`, and `banExpires` fields are optional features. For simple applications without role-based access control or user moderation, these fields can be safely ignored or removed from your schema.
 
 ### Session Model
 

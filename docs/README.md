@@ -92,6 +92,7 @@ shipos-kit/
 -   📦 **Storage** - S3-compatible file storage
 -   🎨 **UI** - Shadcn UI + Radix UI + Tailwind CSS
 -   🔒 **Security** - Best practices for auth, payments, and data protection
+-   ⚙️ **Modular** - Optional features like roles and moderation can be skipped for simpler apps
 
 ## Development
 

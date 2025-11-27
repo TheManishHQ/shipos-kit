@@ -296,10 +296,10 @@ model User {
   emailVerified       DateTime?
   image               String?
   username            String?      @unique
-  role                String?
-  banned              Boolean      @default(false)
-  banReason           String?
-  banExpires          DateTime?
+  role                String?      // Optional: For admin/role systems
+  banned              Boolean      @default(false)  // Optional: For user moderation
+  banReason           String?      // Optional: For user moderation
+  banExpires          DateTime?    // Optional: For user moderation
   onboardingComplete  Boolean      @default(false)
   paymentsCustomerId  String?
   locale              String?
@@ -317,6 +317,8 @@ model User {
   @@index([email])
 }
 ```
+
+**Note:** The `role`, `banned`, `banReason`, and `banExpires` fields are optional and only needed if you're implementing user roles or moderation features. For simple applications, these can be ignored or removed from the schema.
 
 ## Client-Side Usage
 
@@ -364,7 +366,7 @@ function ProfileButton() {
 
 ### Admin Plugin
 
-Provides admin role management:
+Provides admin role management (optional):
 
 ```typescript
 import { admin } from "better-auth/plugins";
@@ -377,6 +379,8 @@ plugins: [admin()];
 -   Assign/remove admin role
 -   Admin-only procedures
 -   Role-based access control
+
+**Note:** This plugin is included in the base configuration but is optional. If you don't need role-based access control or admin features, you can safely ignore the admin functionality. The plugin adds a `role` field to the User model which can be used for basic role management.
 
 ### Username Plugin
 

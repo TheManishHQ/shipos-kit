@@ -114,7 +114,7 @@
     -   Implement connected accounts display
     -   _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
 
--   [ ] 13. Implement session management
+-   [x] 13. Implement session management
 
     -   Create active sessions list endpoint
     -   Build sessions management UI showing device info
@@ -122,14 +122,15 @@
     -   Add current session indicator
     -   _Requirements: 6.3, 6.4_
 
--   [ ] 14. Add user roles and banning system
+-   [ ] ~~14. Add user roles and banning system~~ (OPTIONAL - Skip for simple applications)
 
-    -   Implement role assignment functionality (admin only)
-    -   Create user banning system with reason and expiration
-    -   Add ban check in authentication flow
-    -   Build admin UI for role and ban management
-    -   Implement admin route protection middleware
+    -   ~~Implement role assignment functionality (admin only)~~
+    -   ~~Create user banning system with reason and expiration~~
+    -   ~~Add ban check in authentication flow~~
+    -   ~~Build admin UI for role and ban management~~
+    -   ~~Implement admin route protection middleware~~
     -   _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
+    -   _Note: Only implement if you need multi-role systems or user moderation_
 
 -   [x] 15. Set up email system
 
