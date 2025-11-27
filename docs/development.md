@@ -97,6 +97,29 @@ prisma/migrations
 
 ## Development Workflow
 
+### Available Scripts
+
+From the root directory:
+
+```bash
+# Development
+pnpm dev              # Start development server (all packages)
+pnpm build            # Build for production
+pnpm start            # Start production server
+
+# Code Quality
+pnpm lint             # Run Biome linter
+pnpm check            # Check linting and formatting
+pnpm format           # Format code with Biome
+pnpm clean            # Clean build artifacts
+
+# Database
+pnpm db:generate      # Generate Prisma client
+pnpm db:migrate       # Run database migrations
+pnpm db:push          # Push schema changes (dev only)
+pnpm db:studio        # Open Prisma Studio GUI
+```
+
 ### Starting Development
 
 ```bash
@@ -130,9 +153,8 @@ pnpm dev
 3. **Check code quality:**
 
     ```bash
-    pnpm lint
-    pnpm format
-    pnpm type-check
+    pnpm check  # Check linting and formatting
+    pnpm format  # Auto-format code
     ```
 
 4. **Test your changes:**
@@ -180,9 +202,94 @@ git commit -m "docs(setup): update installation instructions"
 
 ## Code Quality
 
-### Linting
+### Biome - Linting and Formatting
 
-The project uses Biome for linting and formatting:
+The project uses [Biome](https://biomejs.dev/) v2.2.2 as a fast, all-in-one toolchain for linting and formatting. Biome replaces ESLint and Prettier with a single, performant tool.
+
+**Configuration:** `biome.json` in the root directory (extended by individual packages)
+
+**Key Features:**
+
+-   Fast linting and formatting (written in Rust)
+-   Auto-fix for many issues
+-   Import organization
+-   EditorConfig support
+-   Git integration (respects .gitignore)
+-   VCS integration with main branch tracking
+
+**Configuration Structure:**
+
+```json
+{
+	"formatter": {
+		"enabled": true,
+		"useEditorconfig": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			/* ... */
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": { "organizeImports": "on" }
+		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"defaultBranch": "main",
+		"useIgnoreFile": true
+	}
+}
+```
+
+**Enabled Rules:**
+
+-   Recommended rules enabled by default
+-   Unused imports removed automatically (error level with safe fix)
+-   Unused function parameters (warning level)
+-   Template literal optimization (error level with safe fix)
+-   Consistent code style enforcement
+-   TypeScript-specific rules
+
+**Style Rules (Error Level):**
+
+-   `noParameterAssign` - Prevent parameter reassignment
+-   `useAsConstAssertion` - Enforce `as const` for literal types
+-   `useDefaultParameterLast` - Default parameters at end
+-   `useEnumInitializers` - Require enum initializers
+-   `useSelfClosingElements` - Self-closing JSX elements
+-   `useSingleVarDeclarator` - One variable per declaration
+-   `useNumberNamespace` - Use Number namespace methods
+-   `noInferrableTypes` - Remove redundant type annotations
+-   `noUselessElse` - Remove unnecessary else blocks
+
+**Style Rules (Warning Level):**
+
+-   `noNonNullAssertion` - Warn on `!` assertions
+-   `useBlockStatements` - Prefer block statements
+
+**Disabled Rules:**
+
+-   `noExplicitAny` - Allows `any` type when necessary
+-   `noArrayIndexKey` - Allows array index as React key
+-   `noForEach` - Allows `.forEach()` method
+-   `useExhaustiveDependencies` - React hook dependencies not enforced
+-   `useUniqueElementIds` - Allows duplicate element IDs
+
+**CSS Handling:**
+
+-   CSS formatting and linting are disabled
+-   Tailwind classes are not formatted by Biome
+
+**File Exclusions:**
+
+-   `zod/index.ts` - Generated Zod schemas
+-   `tailwind-animate.css` - Tailwind animation styles
+
+### Linting
 
 ```bash
 # Check for issues
@@ -192,15 +299,31 @@ pnpm lint
 pnpm lint --fix
 ```
 
+**What it checks:**
+
+-   Code correctness (unused variables, imports)
+-   Code complexity
+-   Suspicious patterns
+-   Style consistency
+
 ### Formatting
 
 ```bash
-# Check formatting
-pnpm format:check
+# Check all issues (linting + formatting)
+pnpm check
 
 # Format code
 pnpm format
 ```
+
+**Formatting rules:**
+
+-   Uses `.editorconfig` settings
+-   Consistent indentation and spacing
+-   Automatic semicolon insertion
+-   Import organization
+
+**Note:** CSS formatting is disabled in Biome; Tailwind classes are not formatted.
 
 ### Type Checking
 
@@ -209,15 +332,57 @@ pnpm format
 pnpm type-check
 ```
 
+**What it checks:**
+
+-   Type correctness across all packages
+-   Missing type definitions
+-   Type compatibility
+-   Strict mode compliance
+
 ### Pre-commit Hooks
 
 Husky runs checks before commits:
 
--   Linting
--   Type checking
--   Formatting
+-   Linting with Biome
+-   Type checking with TypeScript
+-   Formatting verification
 
 If checks fail, fix the issues before committing.
+
+**Bypass (not recommended):**
+
+```bash
+git commit --no-verify -m "message"
+```
+
+### IDE Integration
+
+**VS Code:**
+
+Install the [Biome extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome):
+
+```bash
+code --install-extension biomejs.biome
+```
+
+**Settings:**
+
+```json
+{
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "explicit",
+		"source.organizeImports.biome": "explicit"
+	}
+}
+```
+
+**Other IDEs:**
+
+-   [JetBrains IDEs](https://biomejs.dev/guides/integrate-in-editor/#jetbrains-ides)
+-   [Neovim](https://biomejs.dev/guides/integrate-in-editor/#neovim)
+-   [Sublime Text](https://biomejs.dev/guides/integrate-in-editor/#sublime-text)
 
 ## Environment Variables
 

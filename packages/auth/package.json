@@ -10,6 +10,7 @@
 	"dependencies": {
 		"@shipos/config": "workspace:*",
 		"@shipos/database": "workspace:*",
+		"@shipos/mail": "workspace:*",
 		"better-auth": "^1.3.7",
 		"cookie": "^1.0.2"
 	},

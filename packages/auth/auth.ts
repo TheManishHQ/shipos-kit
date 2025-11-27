@@ -1,21 +1,30 @@
 import { config } from '@shipos/config'
 import { prisma } from '@shipos/database'
+import { sendEmail } from '@shipos/mail'
 import { betterAuth } from 'better-auth'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import {
 	admin,
 	magicLink,
 	openAPI,
-	twoFactor,
 	username,
 } from 'better-auth/plugins'
 import { parse as parseCookies } from 'cookie'
 
-function getLocaleFromRequest(request?: Request): string {
+function getLocaleFromRequest(request?: Request | any): keyof typeof config.i18n.locales {
 	if (!request) return config.i18n.defaultLocale
 
-	const cookies = parseCookies(request.headers.get('cookie') ?? '')
-	return cookies[config.i18n.localeCookieName] ?? config.i18n.defaultLocale
+	// Handle both Request and GenericEndpointContext
+	const cookieHeader = request.headers?.get?.('cookie') ?? request.headers?.cookie ?? ''
+	const cookies = parseCookies(cookieHeader)
+	const locale = cookies[config.i18n.localeCookieName]
+
+	// Validate locale is one of the supported locales
+	if (locale && locale in config.i18n.locales) {
+		return locale as keyof typeof config.i18n.locales
+	}
+
+	return config.i18n.defaultLocale
 }
 
 function getBaseUrl(): string {
@@ -64,10 +73,14 @@ export const auth = betterAuth({
 			enabled: true,
 			sendChangeEmailVerification: async ({ user, url }, request) => {
 				const locale = getLocaleFromRequest(request)
-				// TODO: Implement email sending when mail package is ready
-				console.log('Send change email verification to:', user.email, {
-					url,
+				await sendEmail({
+					to: user.email,
 					locale,
+					templateId: 'emailVerification',
+					context: {
+						url,
+						name: user.name,
+					},
 				})
 			},
 		},
@@ -78,8 +91,15 @@ export const auth = betterAuth({
 		requireEmailVerification: config.auth.enableSignup,
 		sendResetPassword: async ({ user, url }, request) => {
 			const locale = getLocaleFromRequest(request)
-			// TODO: Implement email sending when mail package is ready
-			console.log('Send password reset to:', user.email, { url, locale })
+			await sendEmail({
+				to: user.email,
+				locale,
+				templateId: 'forgotPassword',
+				context: {
+					url,
+					name: user.name,
+				},
+			})
 		},
 	},
 	emailVerification: {
@@ -87,8 +107,15 @@ export const auth = betterAuth({
 		autoSignInAfterVerification: true,
 		sendVerificationEmail: async ({ user, url }, request) => {
 			const locale = getLocaleFromRequest(request)
-			// TODO: Implement email sending when mail package is ready
-			console.log('Send email verification to:', user.email, { url, locale })
+			await sendEmail({
+				to: user.email,
+				locale,
+				templateId: 'newUser',
+				context: {
+					url,
+					name: user.name,
+				},
+			})
 		},
 	},
 	socialProviders: config.auth.enableSocialLogin
@@ -120,13 +147,18 @@ export const auth = betterAuth({
 					disableSignUp: !config.auth.enableSignup,
 					sendMagicLink: async ({ email, url }, request) => {
 						const locale = getLocaleFromRequest(request)
-						// TODO: Implement email sending when mail package is ready
-						console.log('Send magic link to:', email, { url, locale })
+						await sendEmail({
+							to: email,
+							locale,
+							templateId: 'magicLink',
+							context: {
+								url,
+							},
+						})
 					},
 				}),
 			]
 			: []),
-		...(config.auth.enableTwoFactor ? [twoFactor()] : []),
 		openAPI(),
 	],
 	onAPIError: {

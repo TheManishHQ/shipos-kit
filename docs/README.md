@@ -8,6 +8,7 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 
 -   [Setup Guide](./setup.md) - Installation and initial setup
 -   [Development Guide](./development.md) - Development workflow and best practices
+-   [Biome](./biome.md) - Linting and formatting with Biome
 
 ### Core Systems
 
@@ -15,8 +16,9 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 -   [Database](./database.md) - Prisma database setup and schema
 -   [Configuration](./configuration.md) - Application configuration and feature flags
 
-### Utilities
+### Development Tools
 
+-   [Biome](./biome.md) - Linting and formatting with Biome
 -   [Utilities](./utilities.md) - Shared utility functions and helpers
 -   [Logging](./logging.md) - Structured logging system
 
