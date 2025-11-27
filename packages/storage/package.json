@@ -1,0 +1,16 @@
+{
+	"name": "@shipos/storage",
+	"version": "0.0.0",
+	"private": true,
+	"exports": {
+		".": "./index.ts"
+	},
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.709.0",
+		"@aws-sdk/s3-request-presigner": "^3.709.0"
+	},
+	"devDependencies": {
+		"@repo/tsconfig": "workspace:*",
+		"typescript": "^5.9.2"
+	}
+}
