@@ -104,7 +104,7 @@
     -   ~~Implement backup code usage and invalidation~~
     -   _Requirements: 4.3, 4.4, 4.5, 23.5_
 
--   [ ] 12. Build user account management
+-   [x] 12. Build user account management
 
     -   Create user profile update endpoint and UI
     -   Implement avatar upload with image cropping (CropperJS)

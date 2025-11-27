@@ -15,6 +15,7 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 -   [Authentication](./authentication.md) - Authentication system with better-auth
 -   [Database](./database.md) - Prisma database setup and schema
 -   [Configuration](./configuration.md) - Application configuration and feature flags
+-   [User Management](./user-management.md) - User account and profile management
 
 ### Development Tools
 
