@@ -1,157 +1,434 @@
 # Email System
 
-The email system in Shipos Kit provides a flexible way to send transactional emails with support for multiple providers and internationalization.
+The email system provides transactional email functionality with React Email templates and support for multiple email providers.
 
 ## Overview
 
-The email system consists of:
+The email package (`@shipos/mail`) provides:
 
--   **Email Templates**: React-based email templates using `@react-email/components`
--   **Email Providers**: Pluggable providers (Console, Resend)
--   **Internationalization**: Multi-language support for email content
--   **Type Safety**: Full TypeScript support
+-   Email provider abstraction (Console, Resend)
+-   React Email templates with Tailwind CSS
+-   Locale-aware email sending
+-   Template rendering with context
+-   Type-safe email sending
+-   Reusable email components
 
-## Package Structure
+## Architecture
 
 ```
 packages/mail/
-├── emails/                    # Email templates
-│   ├── EmailVerification.tsx
-│   ├── ForgotPassword.tsx
-│   ├── MagicLink.tsx
-│   ├── NewUser.tsx
-│   ├── NewsletterSignup.tsx
-│   └── index.ts
+├── emails/
+│   ├── EmailVerification.tsx    # Email verification template
+│   ├── ForgotPassword.tsx       # Password reset template
+│   ├── MagicLink.tsx            # Magic link login template
+│   ├── NewUser.tsx              # New user welcome template
+│   ├── NewsletterSignup.tsx     # Newsletter confirmation template
+│   └── index.ts                 # Template exports
 ├── src/
-│   ├── components/           # Reusable email components
-│   │   ├── Logo.tsx
-│   │   ├── PrimaryButton.tsx
-│   │   └── Wrapper.tsx
-│   ├── provider/             # Email providers
-│   │   ├── console.ts
-│   │   ├── resend.ts
-│   │   └── index.ts
+│   ├── components/
+│   │   ├── Logo.tsx             # Email logo component
+│   │   ├── PrimaryButton.tsx    # Primary button component
+│   │   └── Wrapper.tsx          # Email wrapper with styling
+│   ├── provider/
+│   │   ├── console.ts           # Console provider (development)
+│   │   ├── resend.ts            # Resend provider (production)
+│   │   └── index.ts             # Provider factory
 │   └── util/
-│       ├── send.ts           # Main send function
-│       ├── templates.ts      # Template utilities
-│       └── translations.ts   # Translation helpers
-├── types.ts
-├── index.ts
-└── package.json
+│       ├── send.ts              # Email sending logic
+│       ├── templates.ts         # Template registry
+│       └── translations.ts      # Translation utilities
+├── types.ts                     # TypeScript types
+└── index.ts                     # Package exports
+```
+
+## Configuration
+
+### Application Configuration
+
+Email settings are configured in `config/index.ts`:
+
+```typescript
+mails: {
+  from: 'noreply@example.com',
+}
+```
+
+### Environment Variables
+
+```bash
+# Email Provider
+RESEND_API_KEY=re_123456789  # For Resend provider
+
+# From Address (optional, uses config default)
+EMAIL_FROM=noreply@example.com
 ```
 
 ## Email Providers
 
 ### Console Provider (Development)
 
-The console provider logs emails to the console instead of sending them. This is useful for development and testing.
+Logs emails to console instead of sending them.
+
+**Usage:**
 
 ```typescript
-// Automatically used when no EMAIL_PROVIDER is set
+import { ConsoleProvider } from "@shipos/mail/src/provider/console";
+
+const provider = new ConsoleProvider();
+await provider.sendEmail({
+	to: "user@example.com",
+	subject: "Test Email",
+	html: "<p>Hello</p>",
+});
 ```
+
+**Output:**
+
+```
+📧 Email sent:
+To: user@example.com
+Subject: Test Email
+HTML: <p>Hello</p>
+```
+
+**When to use:**
+
+-   Local development
+-   Testing email flows
+-   CI/CD environments
 
 ### Resend Provider (Production)
 
-To use Resend in production:
+Sends emails via [Resend](https://resend.com) API.
 
-1. Set environment variables:
+**Setup:**
+
+1. Sign up at [resend.com](https://resend.com)
+2. Get API key from dashboard
+3. Add to environment variables:
 
 ```bash
-EMAIL_PROVIDER=resend
-RESEND_API_KEY=your_api_key_here
-EMAIL_FROM=noreply@yourdomain.com
+RESEND_API_KEY=re_123456789
 ```
 
-2. The provider will automatically be used based on the `EMAIL_PROVIDER` environment variable.
+**Usage:**
+
+```typescript
+import { ResendProvider } from "@shipos/mail/src/provider/resend";
+
+const provider = new ResendProvider();
+await provider.sendEmail({
+	to: "user@example.com",
+	subject: "Welcome",
+	html: "<p>Welcome to our app!</p>",
+});
+```
+
+**Features:**
+
+-   Reliable email delivery
+-   Email analytics
+-   Bounce handling
+-   Webhook support
+
+### Provider Selection
+
+The provider is automatically selected based on environment:
+
+```typescript
+import { getEmailProvider } from "@shipos/mail/src/provider";
+
+// Returns ConsoleProvider in development
+// Returns ResendProvider in production (if RESEND_API_KEY is set)
+const provider = getEmailProvider();
+```
+
+## Email Templates
+
+### Template Structure
+
+All templates use React Email components:
+
+```typescript
+import { Text } from "@react-email/components";
+import Wrapper from "../src/components/Wrapper";
+import PrimaryButton from "../src/components/PrimaryButton";
+
+export function EmailTemplate({ url, name }: Props) {
+	return (
+		<Wrapper>
+			<Text>Hello {name},</Text>
+			<PrimaryButton href={url}>Click Here</PrimaryButton>
+		</Wrapper>
+	);
+}
+```
+
+### Available Templates
+
+#### EmailVerification
+
+Sent when user changes their email address.
+
+**Props:**
+
+```typescript
+{
+	url: string; // Verification link
+	name: string; // User's name
+	locale: string; // User's locale
+	translations: any; // Translation messages
+}
+```
+
+**Usage:**
+
+```typescript
+await sendEmail({
+	to: user.email,
+	locale: user.locale,
+	templateId: "emailVerification",
+	context: {
+		url: verificationUrl,
+		name: user.name,
+	},
+});
+```
+
+#### ForgotPassword
+
+Sent when user requests password reset.
+
+**Props:**
+
+```typescript
+{
+	url: string; // Reset password link
+	name: string; // User's name
+	locale: string; // User's locale
+	translations: any; // Translation messages
+}
+```
+
+**Usage:**
+
+```typescript
+await sendEmail({
+	to: user.email,
+	locale: user.locale,
+	templateId: "forgotPassword",
+	context: {
+		url: resetUrl,
+		name: user.name,
+	},
+});
+```
+
+#### MagicLink
+
+Sent for passwordless authentication.
+
+**Props:**
+
+```typescript
+{
+	url: string; // Magic link URL
+	locale: string; // User's locale
+	translations: any; // Translation messages
+}
+```
+
+**Usage:**
+
+```typescript
+await sendEmail({
+	to: email,
+	locale: locale,
+	templateId: "magicLink",
+	context: {
+		url: magicLinkUrl,
+	},
+});
+```
+
+#### NewUser
+
+Sent to new users for email verification.
+
+**Props:**
+
+```typescript
+{
+	url: string; // Verification link
+	name: string; // User's name
+	locale: string; // User's locale
+	translations: any; // Translation messages
+}
+```
+
+**Usage:**
+
+```typescript
+await sendEmail({
+	to: user.email,
+	locale: user.locale,
+	templateId: "newUser",
+	context: {
+		url: verificationUrl,
+		name: user.name,
+	},
+});
+```
+
+#### NewsletterSignup
+
+Sent when user subscribes to newsletter.
+
+**Props:**
+
+```typescript
+{
+	locale: string; // User's locale
+	translations: any; // Translation messages
+}
+```
+
+**Usage:**
+
+```typescript
+await sendEmail({
+	to: email,
+	locale: locale,
+	templateId: "newsletterSignup",
+	context: {},
+});
+```
+
+## Reusable Components
+
+### Wrapper
+
+Provides consistent email layout with logo and styling.
+
+**Features:**
+
+-   Responsive design
+-   Tailwind CSS styling
+-   Inter font family
+-   Light/dark mode support
+-   Consistent branding
+
+**Usage:**
+
+```typescript
+import Wrapper from "../src/components/Wrapper";
+
+export function MyEmail() {
+	return (
+		<Wrapper>
+			<Text>Email content here</Text>
+		</Wrapper>
+	);
+}
+```
+
+### Logo
+
+Displays application logo/name.
+
+**Features:**
+
+-   Uses `config.appName`
+-   Consistent styling
+-   Responsive sizing
+
+**Usage:**
+
+```typescript
+import { Logo } from "../src/components/Logo";
+
+<Logo />;
+```
+
+### PrimaryButton
+
+Styled call-to-action button.
+
+**Props:**
+
+```typescript
+{
+	href: string; // Button link
+	children: ReactNode; // Button text
+}
+```
+
+**Usage:**
+
+```typescript
+import PrimaryButton from "../src/components/PrimaryButton";
+
+<PrimaryButton href="https://example.com/verify">Verify Email</PrimaryButton>;
+```
 
 ## Sending Emails
 
-### Using Templates
+### Basic Usage
 
 ```typescript
 import { sendEmail } from "@shipos/mail";
 
-// Send email verification
 await sendEmail({
 	to: "user@example.com",
 	locale: "en",
 	templateId: "emailVerification",
 	context: {
-		url: "https://example.com/verify?token=...",
-		name: "John Doe",
-	},
-});
-
-// Send magic link
-await sendEmail({
-	to: "user@example.com",
-	locale: "de",
-	templateId: "magicLink",
-	context: {
-		url: "https://example.com/auth/magic-link?token=...",
-	},
-});
-
-// Send password reset
-await sendEmail({
-	to: "user@example.com",
-	locale: "en",
-	templateId: "forgotPassword",
-	context: {
-		url: "https://example.com/reset-password?token=...",
+		url: "https://example.com/verify?token=abc",
 		name: "John Doe",
 	},
 });
 ```
 
-### Custom Emails
-
-You can also send custom emails without using templates:
+### With Locale Detection
 
 ```typescript
+import { sendEmail } from "@shipos/mail";
+
+const locale = user.locale || "en";
+
 await sendEmail({
-	to: "user@example.com",
-	subject: "Custom Email",
-	text: "Plain text content",
-	html: "<p>HTML content</p>",
+	to: user.email,
+	locale,
+	templateId: "forgotPassword",
+	context: {
+		url: resetUrl,
+		name: user.name,
+	},
 });
 ```
 
-## Available Templates
+### Error Handling
 
-### 1. Email Verification
-
--   **Template ID**: `emailVerification`
--   **Context**: `{ url: string, name: string }`
--   **Use Case**: Verify email addresses for new users or email changes
-
-### 2. Magic Link
-
--   **Template ID**: `magicLink`
--   **Context**: `{ url: string }`
--   **Use Case**: Passwordless authentication
-
-### 3. Forgot Password
-
--   **Template ID**: `forgotPassword`
--   **Context**: `{ url: string, name: string }`
--   **Use Case**: Password reset requests
-
-### 4. New User
-
--   **Template ID**: `newUser`
--   **Context**: `{ url: string, name: string }`
--   **Use Case**: Welcome email for new users
-
-### 5. Newsletter Signup
-
--   **Template ID**: `newsletterSignup`
--   **Context**: `{}`
--   **Use Case**: Newsletter subscription confirmation
+```typescript
+try {
+	await sendEmail({
+		to: user.email,
+		locale: user.locale,
+		templateId: "newUser",
+		context: { url, name: user.name },
+	});
+	console.log("Email sent successfully");
+} catch (error) {
+	console.error("Failed to send email:", error);
+	// Handle error (retry, log, notify admin, etc.)
+}
+```
 
 ## Internationalization
 
-All email templates support multiple languages. The locale is passed when sending the email:
+### Locale-Aware Emails
+
+Emails are automatically translated based on the provided locale:
 
 ```typescript
 // English email
@@ -159,7 +436,7 @@ await sendEmail({
 	to: "user@example.com",
 	locale: "en",
 	templateId: "emailVerification",
-	context: { url: "...", name: "John" },
+	context: { url, name: "John" },
 });
 
 // German email
@@ -167,157 +444,382 @@ await sendEmail({
 	to: "user@example.com",
 	locale: "de",
 	templateId: "emailVerification",
-	context: { url: "...", name: "John" },
+	context: { url, name: "John" },
 });
 ```
 
-Translations are stored in `packages/i18n/translations/` and automatically loaded based on the locale.
+### Translation Loading
+
+Translations are loaded from `packages/i18n/translations/`:
+
+```typescript
+import { getMessagesForLocale } from "@shipos/i18n";
+
+const translations = await getMessagesForLocale(locale);
+```
+
+### Adding Translations
+
+Add email translations to locale files:
+
+```json
+// packages/i18n/translations/en.json
+{
+	"mail": {
+		"emailVerification": {
+			"subject": "Verify your email",
+			"body": "Please click the link below to verify your email.",
+			"confirmEmail": "Verify email"
+		}
+	}
+}
+```
+
+```json
+// packages/i18n/translations/de.json
+{
+	"mail": {
+		"emailVerification": {
+			"subject": "Bestätigen Sie Ihre E-Mail",
+			"body": "Bitte klicken Sie auf den Link unten, um Ihre E-Mail zu bestätigen.",
+			"confirmEmail": "E-Mail bestätigen"
+		}
+	}
+}
+```
 
 ## Creating Custom Templates
 
-To create a new email template:
+### 1. Create Template File
 
-1. Create a new file in `packages/mail/emails/`:
+Create a new file in `packages/mail/emails/`:
 
 ```typescript
 // packages/mail/emails/CustomEmail.tsx
-import { Link, Text } from "@react-email/components";
-import React from "react";
+import { Text, Link } from "@react-email/components";
 import { createTranslator } from "use-intl/core";
-import PrimaryButton from "../src/components/PrimaryButton";
 import Wrapper from "../src/components/Wrapper";
-import { defaultLocale, defaultTranslations } from "../src/util/translations";
+import PrimaryButton from "../src/components/PrimaryButton";
 import type { BaseMailProps } from "../types";
+
+interface CustomEmailProps extends BaseMailProps {
+	url: string;
+	userName: string;
+}
 
 export function CustomEmail({
 	url,
-	name,
+	userName,
 	locale,
 	translations,
-}: {
-	url: string;
-	name: string;
-} & BaseMailProps) {
-	const t = createTranslator({
-		locale,
-		messages: translations,
-	});
+}: CustomEmailProps) {
+	const t = createTranslator({ locale, messages: translations });
 
 	return (
 		<Wrapper>
-			<Text>{t("mail.customEmail.body", { name })}</Text>
-			<PrimaryButton href={url}>
-				{t("mail.customEmail.action")}
-			</PrimaryButton>
+			<Text>{t("mail.custom.greeting", { name: userName })}</Text>
+			<Text>{t("mail.custom.body")}</Text>
+
+			<PrimaryButton href={url}>{t("mail.custom.action")}</PrimaryButton>
+
+			<Text className="text-muted-foreground text-sm">
+				{t("mail.common.openLinkInBrowser")}
+				<Link href={url} className="break-all">
+					{url}
+				</Link>
+			</Text>
 		</Wrapper>
 	);
 }
 
+// Preview props for development
 CustomEmail.PreviewProps = {
-	locale: defaultLocale,
-	translations: defaultTranslations,
+	locale: "en",
+	translations: {},
 	url: "#",
-	name: "John Doe",
+	userName: "John Doe",
 };
 
 export default CustomEmail;
 ```
 
-2. Add translations in `packages/i18n/translations/en.json`:
+### 2. Register Template
+
+Add to `packages/mail/src/util/templates.ts`:
+
+```typescript
+import { CustomEmail } from "../../emails/CustomEmail";
+
+export const templates = {
+	emailVerification: EmailVerification,
+	forgotPassword: ForgotPassword,
+	magicLink: MagicLink,
+	newUser: NewUser,
+	newsletterSignup: NewsletterSignup,
+	custom: CustomEmail, // Add your template
+};
+```
+
+### 3. Add Translations
 
 ```json
+// packages/i18n/translations/en.json
 {
 	"mail": {
-		"customEmail": {
+		"custom": {
 			"subject": "Custom Email Subject",
-			"body": "Hello {name}, this is a custom email.",
+			"greeting": "Hello {name},",
+			"body": "This is a custom email template.",
 			"action": "Take Action"
 		}
 	}
 }
 ```
 
-3. Register the template in `packages/mail/emails/index.ts`:
-
-```typescript
-import { CustomEmail } from "./CustomEmail";
-
-export const mailTemplates = {
-	// ... existing templates
-	customEmail: CustomEmail,
-} as const;
-```
-
-4. Use the template:
+### 4. Use Template
 
 ```typescript
 await sendEmail({
-	to: "user@example.com",
-	locale: "en",
-	templateId: "customEmail",
+	to: user.email,
+	locale: user.locale,
+	templateId: "custom",
 	context: {
 		url: "https://example.com/action",
-		name: "John Doe",
+		userName: user.name,
 	},
 });
 ```
 
-## Integration with Authentication
+## Email Styling
 
-The email system is integrated with the authentication system in `packages/auth/auth.ts`:
+### Tailwind CSS
 
--   **Email Verification**: Sent when users sign up
--   **Password Reset**: Sent when users request password reset
--   **Magic Link**: Sent for passwordless authentication
--   **Email Change**: Sent when users change their email address
+Templates use Tailwind CSS for styling:
 
-All authentication emails automatically use the user's locale preference.
+```typescript
+<Text className="text-lg font-bold text-foreground">Welcome!</Text>
+```
 
-## Environment Variables
+### Theme Colors
 
-```bash
-# Email provider (console or resend)
-EMAIL_PROVIDER=console
+Available theme colors:
 
-# Resend API key (required for resend provider)
-RESEND_API_KEY=re_...
+```typescript
+colors: {
+  border: '#e3ebf6',
+  background: '#fafafe',
+  foreground: '#292b35',
+  primary: {
+    DEFAULT: '#4e6df5',
+    foreground: '#f6f7f9',
+  },
+  secondary: {
+    DEFAULT: '#292b35',
+    foreground: '#ffffff',
+  },
+  card: {
+    DEFAULT: '#ffffff',
+    foreground: '#292b35',
+  },
+}
+```
 
-# From email address
-EMAIL_FROM=noreply@yourdomain.com
+### Custom Styling
+
+Add custom styles with Tailwind classes:
+
+```typescript
+<div className="rounded-lg bg-card p-6 shadow-md">
+	<Text className="text-2xl font-bold text-primary">Important Notice</Text>
+</div>
 ```
 
 ## Testing Emails
 
-During development, emails are logged to the console by default. To test email rendering:
+### Preview in Development
 
-1. The console provider will log the email content
-2. You can preview emails by running the React Email dev server (if configured)
+Use React Email CLI to preview templates:
+
+```bash
+# Install React Email CLI
+pnpm add -D @react-email/cli
+
+# Start preview server
+pnpm email:dev
+```
+
+Opens preview at `http://localhost:3000`
+
+### Send Test Email
+
+```typescript
+import { sendEmail } from "@shipos/mail";
+
+// Send test email
+await sendEmail({
+	to: "test@example.com",
+	locale: "en",
+	templateId: "emailVerification",
+	context: {
+		url: "https://example.com/verify?token=test",
+		name: "Test User",
+	},
+});
+```
+
+### Console Provider Testing
+
+In development, emails are logged to console:
+
+```bash
+pnpm dev
+
+# Trigger email flow (signup, password reset, etc.)
+# Check console for email output
+```
 
 ## Best Practices
 
-1. **Always use templates**: Templates ensure consistent branding and proper internationalization
-2. **Test in multiple languages**: Verify emails render correctly in all supported locales
-3. **Use descriptive subjects**: Make sure email subjects are clear and actionable
-4. **Include plain text**: Always provide a plain text version for accessibility
-5. **Handle errors gracefully**: Email sending can fail; handle errors appropriately
+### Use Locale-Aware Sending
+
+Always provide locale for proper translations:
+
+```typescript
+// Good
+await sendEmail({
+	to: user.email,
+	locale: user.locale || "en",
+	templateId: "emailVerification",
+	context: { url, name: user.name },
+});
+
+// Avoid
+await sendEmail({
+	to: user.email,
+	locale: "en", // Hardcoded locale
+	templateId: "emailVerification",
+	context: { url, name: user.name },
+});
+```
+
+### Include Fallback Links
+
+Always include plain text links for accessibility:
+
+```typescript
+<PrimaryButton href={url}>
+  Verify Email
+</PrimaryButton>
+
+<Text className="text-sm text-muted-foreground">
+  Or copy this link: {url}
+</Text>
+```
+
+### Keep Templates Simple
+
+-   Use clear, concise copy
+-   Single call-to-action per email
+-   Mobile-responsive design
+-   Accessible color contrast
+
+### Handle Errors Gracefully
+
+```typescript
+try {
+  await sendEmail({ ... })
+} catch (error) {
+  // Log error
+  console.error('Email send failed:', error)
+
+  // Don't block user flow
+  // Consider retry logic or queue
+}
+```
+
+### Test All Locales
+
+Test email templates in all supported locales:
+
+```typescript
+for (const locale of ["en", "de"]) {
+	await sendEmail({
+		to: "test@example.com",
+		locale,
+		templateId: "emailVerification",
+		context: { url, name: "Test" },
+	});
+}
+```
 
 ## Troubleshooting
 
-### Emails not sending
+### Common Issues
 
-1. Check that `EMAIL_PROVIDER` is set correctly
-2. Verify API keys are configured
-3. Check logs for error messages
-4. Ensure the `from` email address is verified with your provider
+**Issue: "RESEND_API_KEY not set"**
 
-### Wrong language in emails
+-   Solution: Add `RESEND_API_KEY` to environment variables
+-   Or use Console provider in development
 
-1. Verify the locale is being passed correctly
-2. Check that translations exist for the locale
-3. Ensure the locale cookie is set properly
+**Issue: "Template not found"**
 
-### Template not found
+-   Solution: Ensure template is registered in `templates.ts`
+-   Check template ID spelling
 
-1. Verify the template is registered in `emails/index.ts`
-2. Check that the template ID matches exactly
-3. Ensure the template file is exported correctly
+**Issue: "Email not translated"**
+
+-   Solution: Add translations to all locale files
+-   Check locale is passed correctly
+
+**Issue: "Styling not applied"**
+
+-   Solution: Ensure Tailwind config is correct in Wrapper component
+-   Check class names are valid
+
+**Issue: "Email not received"**
+
+-   Solution: Check spam folder
+-   Verify email address is correct
+-   Check Resend dashboard for delivery status
+
+## Production Deployment
+
+### Resend Setup
+
+1. Sign up at [resend.com](https://resend.com)
+2. Verify your domain
+3. Get API key
+4. Add to production environment:
+
+```bash
+RESEND_API_KEY=re_prod_123456789
+```
+
+### Domain Verification
+
+Verify your sending domain in Resend:
+
+1. Add DNS records (SPF, DKIM, DMARC)
+2. Wait for verification
+3. Test email sending
+
+### Monitoring
+
+Monitor email delivery:
+
+-   Check Resend dashboard for analytics
+-   Set up webhook for delivery events
+-   Log email sending errors
+-   Track bounce rates
+
+## Next Steps
+
+-   [Authentication](./authentication.md) - Email flows in auth
+-   [Internationalization](./i18n.md) - Add email translations
+-   [Configuration](./configuration.md) - Configure email settings
+
+## Resources
+
+-   [React Email Documentation](https://react.email/)
+-   [Resend Documentation](https://resend.com/docs)
+-   [Tailwind CSS](https://tailwindcss.com/)

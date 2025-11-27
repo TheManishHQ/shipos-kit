@@ -6,7 +6,8 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 
 ### Getting Started
 
--   [Setup Guide](./setup.md) - Installation and initial setup
+-   [Quick Start Guide](./quick-start.md) - Get up and running in minutes ⚡
+-   [Setup Guide](./setup.md) - Detailed installation and initial setup
 -   [Development Guide](./development.md) - Development workflow and best practices
 -   [Biome](./biome.md) - Linting and formatting with Biome
 
@@ -27,14 +28,14 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 ### Infrastructure
 
 -   [Storage](./storage.md) - File storage with S3-compatible providers (✅ Implemented)
+-   [Email](./email.md) - Email system and templates (✅ Implemented)
+-   [Internationalization](./i18n.md) - Multi-language support with next-intl (✅ Implemented)
 
 ### Coming Soon
 
 -   [API](./api.md) - Type-safe API with ORPC
 -   [Payments](./payments.md) - Payment provider integration
 -   [AI](./ai.md) - AI chat system with OpenAI
--   [Email](./email.md) - Email system and templates
--   [Internationalization](./i18n.md) - Multi-language support
 
 ## Quick Start
 
@@ -87,15 +88,27 @@ shipos-kit/
 
 ## Key Features
 
--   🔐 **Authentication** - Email/password, magic links, OAuth, passkeys, 2FA
+### ✅ Implemented
+
+-   🔐 **Authentication** - Email/password, magic links, OAuth (Google, GitHub), passkeys
+-   📧 **Email** - Transactional emails with React Email and Resend
+-   📦 **Storage** - S3-compatible file storage with presigned URLs
+-   🌍 **i18n** - Multi-language support with next-intl (English, German)
+-   👤 **User Management** - Profile updates, avatar upload, session management
+-   🗄️ **Database** - Prisma ORM with PostgreSQL
+-   🎨 **UI** - Shadcn UI + Radix UI + Tailwind CSS 4
+-   🔒 **Security** - Session management, input validation, secure file uploads
+-   ⚙️ **Configuration** - Centralized config with feature flags
+-   📝 **Logging** - Structured JSON logging
+-   🛠️ **Development** - Biome for linting/formatting, TypeScript strict mode
+
+### 🚧 Coming Soon
+
 -   💳 **Payments** - Stripe and DodoPayments integration
 -   🤖 **AI** - OpenAI integration for chat and image generation
--   🌍 **i18n** - Multi-language support with next-intl
--   📧 **Email** - Transactional emails with React Email
--   📦 **Storage** - S3-compatible file storage
--   🎨 **UI** - Shadcn UI + Radix UI + Tailwind CSS
--   🔒 **Security** - Best practices for auth, payments, and data protection
--   ⚙️ **Modular** - Optional features like roles and moderation can be skipped for simpler apps
+-   🔌 **API** - Type-safe API with ORPC
+-   👥 **Admin Panel** - User management and moderation (optional)
+-   🧪 **Testing** - E2E tests with Playwright
 
 ## Development
 

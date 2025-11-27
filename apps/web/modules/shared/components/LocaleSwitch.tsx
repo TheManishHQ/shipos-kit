@@ -2,8 +2,8 @@
 
 import { updateLocale } from "@i18n/lib/update-locale";
 import { useLocalePathname, useLocaleRouter } from "@i18n/routing";
-import { config } from "@repo/config";
-import type { Locale } from "@repo/i18n";
+import { config } from "@shipos/config";
+import type { Locale } from "@shipos/i18n";
 import { Button } from "@ui/components/button";
 import {
 	DropdownMenu,
@@ -50,7 +50,7 @@ export function LocaleSwitch({
 								`${localePathname}?${searchParams.toString()}`,
 								{
 									locale: value,
-								},
+								}
 							);
 						} else {
 							updateLocale(value as Locale);
