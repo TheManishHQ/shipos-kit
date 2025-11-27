@@ -25,6 +25,7 @@ packages/storage/
 │   └── index.ts            # Provider factory
 ├── types.ts                # TypeScript interfaces
 ├── index.ts                # Package exports
+├── biome.json              # Biome configuration
 ├── package.json
 └── tsconfig.json
 ```

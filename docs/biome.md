@@ -63,6 +63,8 @@ Individual packages extend the root configuration:
 
 This allows packages to inherit the base configuration while adding package-specific overrides if needed.
 
+**Note:** Packages no longer need to specify `files.include` patterns as they inherit the default file discovery from the root configuration. Only add file patterns if you need to override the default behavior.
+
 ## Linting Rules
 
 ### Recommended Rules
