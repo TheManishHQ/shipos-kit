@@ -22,7 +22,7 @@ export const config = {
         enableMagicLink: true,
         enableSocialLogin: true,
         enablePasswordLogin: true,
-        enableTwoFactor: true,
+        enableTwoFactor: false,
         redirectAfterSignIn: '/app',
         redirectAfterLogout: '/',
         sessionCookieMaxAge: 30 * 24 * 60 * 60, // 30 days

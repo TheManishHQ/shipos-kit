@@ -56,16 +56,19 @@
     -   Create auth client for frontend usage
     -   _Requirements: 2.1, 2.2, 2.5, 6.1, 6.2, 6.5, 23.1, 23.2_
 
--   [ ] 7. Implement email verification flow
+-   [x] 7. Implement email verification flow
 
     -   Configure email verification in better-auth
     -   Set up verification token generation and storage
     -   Create email verification endpoint
     -   Implement auto sign-in after verification
     -   Add email verification status checks
-    -   _Requirements: 2.2, 2.3_
+    -   Create i18n package with translations
+    -   Create mail package with email templates
+    -   Integrate email sending in auth flows
+    -   _Requirements: 2.2, 2.3, 13.1, 13.2, 13.3, 13.4, 13.5, 13.6, 13.7, 13.8, 15.1, 15.2_
 
--   [ ] 8. Add passwordless authentication
+-   [x] 8. Add passwordless authentication
 
     -   Enable magic link authentication in better-auth config
     -   Configure magic link email sending
@@ -73,7 +76,7 @@
     -   Add magic link request UI component
     -   _Requirements: 3.1, 3.2_
 
--   [ ] 9. Integrate OAuth providers
+-   [x] 9. Integrate OAuth providers
 
     -   Configure Google OAuth with email and profile scopes
     -   Configure GitHub OAuth with user:email scope
@@ -82,7 +85,7 @@
     -   Add social login buttons to auth pages
     -   _Requirements: 3.3, 3.4, 3.5, 23.6_
 
--   [ ] 10. Implement passkey authentication
+-   [x] 10. Implement passkey authentication
 
     -   Enable passkey/WebAuthn in better-auth config
     -   Create passkey registration flow
@@ -91,14 +94,14 @@
     -   Add passkey management UI in settings
     -   _Requirements: 4.1, 4.2_
 
--   [ ] 11. Add two-factor authentication
+-   [x] 11. ~~Add two-factor authentication~~ (REMOVED - Not needed for this project)
 
-    -   Enable 2FA/TOTP in better-auth config
-    -   Implement TOTP secret generation
-    -   Create backup codes generation and storage
-    -   Build 2FA setup flow with QR code display
-    -   Add 2FA verification step in login flow
-    -   Implement backup code usage and invalidation
+    -   ~~Enable 2FA/TOTP in better-auth config~~
+    -   ~~Implement TOTP secret generation~~
+    -   ~~Create backup codes generation and storage~~
+    -   ~~Build 2FA setup flow with QR code display~~
+    -   ~~Add 2FA verification step in login flow~~
+    -   ~~Implement backup code usage and invalidation~~
     -   _Requirements: 4.3, 4.4, 4.5, 23.5_
 
 -   [ ] 12. Build user account management
@@ -128,10 +131,10 @@
     -   Implement admin route protection middleware
     -   _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 
--   [ ] 15. Set up email system
+-   [x] 15. Set up email system
 
     -   Create email provider abstraction in packages/mail/
-    -   Implement email provider (Plunk/Resend/SendGrid)
+    -   Implement email provider (Console/Resend)
     -   Build React email templates: EmailVerification, ForgotPassword, MagicLink, NewsletterSignup, NewUser
     -   Implement locale-aware email sending
     -   Create email sending service with template rendering

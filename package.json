@@ -12,8 +12,7 @@
 		"db:generate": "turbo db:generate",
 		"db:migrate": "turbo db:migrate",
 		"db:push": "turbo db:push",
-		"db:studio": "turbo db:studio",
-		"prepare": "husky"
+		"db:studio": "turbo db:studio"
 	},
 	"engines": {
 		"node": ">=20"
@@ -40,8 +39,6 @@
 		]
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,tsx,json,css,md}": [
-			"biome check --write --no-errors-on-unmatched"
-		]
+		"*.{js,jsx,ts,tsx,json,css}": "biome check --write --no-errors-on-unmatched"
 	}
 }
