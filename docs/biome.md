@@ -218,13 +218,30 @@ From `package.json`:
 
 Biome runs automatically on staged files via Husky and lint-staged:
 
+**Configuration:**
+
 ```json
+// package.json
 "lint-staged": {
-  "*.{js,jsx,ts,tsx,json,css,md}": [
-    "biome check --write --no-errors-on-unmatched"
-  ]
+  "*.{js,jsx,ts,tsx,json,css}": "biome check --write --no-errors-on-unmatched"
 }
 ```
+
+**Hook:**
+
+```bash
+# .husky/pre-commit
+pnpm lint-staged
+```
+
+**What happens:**
+
+1. You commit staged files
+2. Husky triggers the pre-commit hook
+3. lint-staged runs Biome on staged files only
+4. Biome checks and auto-fixes issues
+5. Fixed files are automatically staged
+6. Commit proceeds if no errors remain
 
 ## IDE Integration
 

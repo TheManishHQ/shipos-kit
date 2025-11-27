@@ -53,13 +53,15 @@ dist
 ```gitignore
 .vscode
 .idea
-.husky
 .DS_Store
 ```
 
 **Why:** IDE configurations and system files are user-specific and shouldn't be shared across the team.
 
-**Note:** If you want to share IDE settings, create a `.vscode/settings.json.example` file instead.
+**Note:**
+
+-   If you want to share IDE settings, create a `.vscode/settings.json.example` file instead
+-   `.husky/` hooks are committed to ensure consistent pre-commit checks across the team
 
 #### Debug Logs
 
@@ -341,13 +343,30 @@ pnpm type-check
 
 ### Pre-commit Hooks
 
-Husky runs checks before commits:
+Husky runs lint-staged before commits to check and auto-fix staged files:
 
--   Linting with Biome
--   Type checking with TypeScript
--   Formatting verification
+**What runs:**
 
-If checks fail, fix the issues before committing.
+-   Biome check with auto-fix on staged files
+-   Applies to: `*.{js,jsx,ts,tsx,json,css}`
+
+**Configuration:**
+
+```json
+// package.json
+"lint-staged": {
+  "*.{js,jsx,ts,tsx,json,css}": "biome check --write --no-errors-on-unmatched"
+}
+```
+
+**Hook file:**
+
+```bash
+# .husky/pre-commit
+pnpm lint-staged
+```
+
+If checks fail, fix the issues before committing. The hook will automatically format and fix auto-fixable issues.
 
 **Bypass (not recommended):**
 

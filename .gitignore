@@ -31,7 +31,6 @@ dist
 # IDE
 .vscode
 .idea
-.husky
 
 # debug
 npm-debug.log*
