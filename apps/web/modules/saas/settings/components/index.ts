@@ -1,3 +1,4 @@
+export { ActiveSessionsBlock } from "./ActiveSessionsBlock";
 export { ChangeEmailForm } from "./ChangeEmailForm";
 export { ChangeNameForm } from "./ChangeNameForm";
 export { ChangePasswordForm } from "./ChangePasswordForm";
