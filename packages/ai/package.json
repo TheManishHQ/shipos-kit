@@ -1,0 +1,18 @@
+{
+	"name": "@shipos/ai",
+	"version": "0.1.0",
+	"main": "./index.ts",
+	"types": "./index.ts",
+	"scripts": {
+		"type-check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@ai-sdk/openai": "^2.0.23",
+		"ai": "^5.0.30",
+		"openai": "^5.18.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.2",
+		"typescript": "5.9.2"
+	}
+}

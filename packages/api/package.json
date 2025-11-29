@@ -15,6 +15,7 @@
 		"@orpc/openapi": "^1.8.6",
 		"@orpc/server": "^1.8.6",
 		"@orpc/zod": "^1.8.6",
+		"@shipos/ai": "workspace:*",
 		"@shipos/auth": "workspace:*",
 		"@shipos/config": "workspace:*",
 		"@shipos/database": "workspace:*",

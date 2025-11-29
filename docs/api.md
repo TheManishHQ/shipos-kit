@@ -2,6 +2,37 @@
 
 The API system uses [ORPC](https://orpc.dev/) v1.8.6 to provide type-safe, end-to-end typed API routes with automatic OpenAPI schema generation.
 
+## Implementation Status
+
+⚠️ **Status: In Progress (~50%)**
+
+**What's Working:**
+
+-   ✅ ORPC infrastructure fully set up
+-   ✅ Base procedures (public, protected, admin)
+-   ✅ Authentication middleware with session validation
+-   ✅ Admin role check middleware
+-   ✅ Error handling with proper HTTP status codes
+-   ✅ OpenAPI schema generation configured
+-   ✅ **Payments API module** - Checkout, portal, purchases endpoints
+-   ✅ **Users API module** - Avatar upload URL generation
+-   ✅ **Contact API module** - Types defined (endpoint in progress)
+
+**What's In Progress (Task 24):**
+
+-   🚧 Contact form submission endpoint
+-   🚧 Newsletter subscription endpoint
+-   🚧 Additional user management endpoints
+
+**What's Not Implemented:**
+
+-   ❌ **Admin API module** - User/organization management (optional for simple apps)
+-   ❌ **AI API module** - Chat CRUD operations (requires OpenAI integration - Task 25)
+-   ❌ API client generation utilities
+-   ❌ Comprehensive API documentation pages
+
+**Note:** The admin and AI modules are optional. Most applications only need the payments and users modules that are already implemented.
+
 ## Overview
 
 The API package (`@shipos/api`) provides:

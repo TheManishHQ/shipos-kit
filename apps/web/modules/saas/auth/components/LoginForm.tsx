@@ -5,7 +5,8 @@ import { authClient } from "@shipos/auth/client";
 import { config } from "@shipos/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { sessionQueryKey } from "@saas/auth/lib/api";
-import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
+// TODO: Organizations not implemented yet
+// import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
@@ -80,7 +81,7 @@ export function LoginForm() {
 
 	const redirectPath = invitationId
 		? `/organization-invitation/${invitationId}`
-		: (redirectTo ?? config.auth.redirectAfterSignIn);
+		: redirectTo ?? config.auth.redirectAfterSignIn;
 
 	useEffect(() => {
 		if (sessionLoaded && user) {
@@ -103,8 +104,8 @@ export function LoginForm() {
 					router.replace(
 						withQuery(
 							"/auth/verify",
-							Object.fromEntries(searchParams.entries()),
-						),
+							Object.fromEntries(searchParams.entries())
+						)
 					);
 					return;
 				}
@@ -129,7 +130,7 @@ export function LoginForm() {
 				message: getAuthErrorMessage(
 					e && typeof e === "object" && "code" in e
 						? (e.code as string)
-						: undefined,
+						: undefined
 				),
 			});
 		}
@@ -137,15 +138,17 @@ export function LoginForm() {
 
 	const signInWithPasskey = async () => {
 		try {
-			await authClient.signIn.passkey();
+			// TODO: Passkey auth not available in current better-auth version
+			// await authClient.signIn.passkey();
+			throw new Error("Passkey authentication not available");
 
-			router.replace(redirectPath);
+			// router.replace(redirectPath);
 		} catch (e) {
 			form.setError("root", {
 				message: getAuthErrorMessage(
 					e && typeof e === "object" && "code" in e
 						? (e.code as string)
-						: undefined,
+						: undefined
 				),
 			});
 		}
@@ -175,9 +178,10 @@ export function LoginForm() {
 				</Alert>
 			) : (
 				<>
-					{invitationId && (
+					{/* TODO: Organizations not implemented yet */}
+					{/* {invitationId && (
 						<OrganizationInvitationAlert className="mb-6" />
-					)}
+					)} */}
 
 					<Form {...form}>
 						<form
@@ -191,7 +195,7 @@ export function LoginForm() {
 										onChange={(mode) =>
 											form.setValue(
 												"mode",
-												mode as typeof signinMode,
+												mode as typeof signinMode
 											)
 										}
 									/>
@@ -235,7 +239,7 @@ export function LoginForm() {
 												<div className="flex justify-between gap-4">
 													<FormLabel>
 														{t(
-															"auth.signup.password",
+															"auth.signup.password"
 														)}
 													</FormLabel>
 
@@ -244,7 +248,7 @@ export function LoginForm() {
 														className="text-foreground/60 text-xs"
 													>
 														{t(
-															"auth.login.forgotPassword",
+															"auth.login.forgotPassword"
 														)}
 													</Link>
 												</div>
@@ -264,7 +268,7 @@ export function LoginForm() {
 															type="button"
 															onClick={() =>
 																setShowPassword(
-																	!showPassword,
+																	!showPassword
 																)
 															}
 															className="absolute inset-y-0 right-0 flex items-center pr-4 text-primary text-xl"
@@ -317,7 +321,7 @@ export function LoginForm() {
 													providerId as OAuthProvider
 												}
 											/>
-										),
+										)
 									)}
 
 								{config.auth.enablePasskeys && (
@@ -342,7 +346,7 @@ export function LoginForm() {
 							<Link
 								href={withQuery(
 									"/auth/signup",
-									Object.fromEntries(searchParams.entries()),
+									Object.fromEntries(searchParams.entries())
 								)}
 							>
 								{t("auth.login.createAnAccount")}
