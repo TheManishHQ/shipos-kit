@@ -277,7 +277,7 @@
     -   Configure Tailwind with theme CSS variables
     -   _Requirements: 18.1, 18.2, 18.3, 18.4, 18.5_
 
--   [ ] 29. Build authentication pages
+-   [x] 29. Build authentication pages
 
     -   Create login page with email/password form
     -   Create signup page with validation
