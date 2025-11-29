@@ -299,7 +299,7 @@
     -   Create dashboard layout wrapper
     -   _Requirements: 27.9, 28.1, 28.6, 28.7_
 
--   [ ] 31. Build user settings pages
+-   [x] 31. Build user settings pages
 
     -   Create settings layout with tabs
     -   Build general settings page (profile, avatar, locale)
