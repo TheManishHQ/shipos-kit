@@ -238,35 +238,87 @@ const deleteChat = protectedProcedure
         return { success: true };
     });
 
-// Image generation placeholder (Task 26)
+// Image generation (Task 26)
 const generateImage = protectedProcedure
-    .input(
-        z.object({
-            prompt: z.string().min(1).max(1000),
-            size: z.enum(["256x256", "512x512", "1024x1024"]).default("1024x1024"),
-            n: z.number().min(1).max(4).default(1),
-        }),
-    )
-    .route({
-        method: "POST",
-        path: "/ai/image",
-        tags: ["AI"],
-        summary: "Generate image",
-        description: "Generate AI image (placeholder - will be implemented in Task 26)",
-    })
-    .handler(async ({ input }) => {
-        // TODO: Implement OpenAI DALL-E integration in Task 26
-        throw new Error(
-            "AI image generation not implemented yet. Will be added in Task 26.",
-        );
-    });
+	.input(
+		z.object({
+			prompt: z.string().min(1).max(1000),
+			size: z
+				.enum([
+					"256x256",
+					"512x512",
+					"1024x1024",
+					"1792x1024",
+					"1024x1792",
+				])
+				.default("1024x1024"),
+			n: z.number().min(1).max(4).default(1),
+			quality: z.enum(["standard", "hd"]).default("standard"),
+			style: z.enum(["vivid", "natural"]).default("vivid"),
+		}),
+	)
+	.route({
+		method: "POST",
+		path: "/ai/image",
+		tags: ["AI"],
+		summary: "Generate image",
+		description: "Generate AI image using DALL-E 3",
+	})
+	.handler(async ({ input }) => {
+		const { generateAIImage } = await import("@shipos/ai");
+
+		const result = await generateAIImage({
+			prompt: input.prompt,
+			size: input.size,
+			n: input.n,
+			quality: input.quality,
+			style: input.style,
+		});
+
+		return result;
+	});
+
+// Audio transcription (Task 26)
+const transcribeAudio = protectedProcedure
+	.input(
+		z.object({
+			audioFile: z.instanceof(File),
+			language: z.string().optional(),
+			prompt: z.string().optional(),
+			responseFormat: z
+				.enum(["json", "text", "srt", "verbose_json", "vtt"])
+				.default("json"),
+			temperature: z.number().min(0).max(1).default(0),
+		}),
+	)
+	.route({
+		method: "POST",
+		path: "/ai/transcribe",
+		tags: ["AI"],
+		summary: "Transcribe audio",
+		description: "Transcribe audio using Whisper-1",
+	})
+	.handler(async ({ input }) => {
+		const { transcribeAudio: transcribe } = await import("@shipos/ai");
+
+		const result = await transcribe({
+			audioFile: input.audioFile,
+			language: input.language,
+			prompt: input.prompt,
+			responseFormat: input.responseFormat,
+			temperature: input.temperature,
+		});
+
+		return result;
+	});
 
 export const aiRouter = {
-    createChat,
-    listChats,
-    getChat,
-    addMessage,
-    updateChat,
-    deleteChat,
-    generateImage,
+	createChat,
+	listChats,
+	getChat,
+	addMessage,
+	updateChat,
+	deleteChat,
+	generateImage,
+	transcribeAudio,
 };

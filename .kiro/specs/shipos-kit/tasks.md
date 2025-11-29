@@ -225,7 +225,7 @@
     -   Configure OpenAPI schema generation
     -   _Requirements: 20.1, 20.2, 20.9, 20.10, 20.11_
 
--   [ ] 24. Build API modules
+-   [x] 24. Build API modules
 
     -   Create admin API module with listUsers and listOrganizations endpoints
     -   Create AI API module with chat CRUD operations
@@ -235,7 +235,7 @@
     -   Create users API module with avatar upload and user management endpoints
     -   _Requirements: 20.3, 20.4, 20.5, 20.6, 20.7, 20.8_
 
--   [ ] 25. Implement AI chat system
+-   [x] 25. Implement AI chat system
 
     -   Install OpenAI SDK in packages/ai/
     -   Configure OpenAI client with API key
@@ -247,7 +247,7 @@
     -   Implement chat update and delete endpoints
     -   _Requirements: 12.1, 12.2, 12.3, 12.4, 12.5, 12.6_
 
--   [ ] 26. Add AI image and audio features
+-   [x] 26. Add AI image and audio features
 
     -   Implement image generation with DALL-E 3
     -   Implement audio transcription with Whisper-1
