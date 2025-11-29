@@ -289,7 +289,7 @@
     -   Style with centered auth layout
     -   _Requirements: 27.8_
 
--   [ ] 30. Create SaaS application dashboard
+-   [x] 30. Create SaaS application dashboard
 
     -   Build main dashboard page at /app
     -   Create sidebar navigation component (if enabled)

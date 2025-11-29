@@ -1,0 +1,26 @@
+import { getSession } from "@saas/auth/lib/server";
+import { PageHeader } from "@saas/shared/components/PageHeader";
+import UserStart from "@saas/start/UserStart";
+import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+
+export default async function AppStartPage() {
+	const session = await getSession();
+
+	if (!session) {
+		redirect("/auth/login");
+	}
+
+	const t = await getTranslations();
+
+	return (
+		<div className="">
+			<PageHeader
+				title={t("start.welcome", { name: session?.user.name })}
+				subtitle={t("start.subtitle")}
+			/>
+
+			<UserStart />
+		</div>
+	);
+}
