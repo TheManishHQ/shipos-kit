@@ -1,8 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authClient } from "@repo/auth/client";
-import { config } from "@repo/config";
+import { authClient } from "@shipos/auth/client";
+import { config } from "@shipos/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { useRouter } from "@shared/hooks/router";

@@ -1,8 +1,8 @@
 "use client";
 
 import { DropdownMenuSub } from "@radix-ui/react-dropdown-menu";
-import { authClient } from "@repo/auth/client";
-import { config } from "@repo/config";
+import { authClient } from "@shipos/auth/client";
+import { config } from "@shipos/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { UserAvatar } from "@shared/components/UserAvatar";
 import {

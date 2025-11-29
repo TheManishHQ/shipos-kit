@@ -1,7 +1,7 @@
 "use client";
 
-import { authClient } from "@repo/auth/client";
-import { config } from "@repo/config";
+import { authClient } from "@shipos/auth/client";
+import { config } from "@shipos/config";
 import { Button } from "@ui/components/button";
 import { parseAsString, useQueryState } from "nuqs";
 import { oAuthProviders } from "../constants/oauth-providers";

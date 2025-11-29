@@ -1,4 +1,4 @@
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { NavBar } from "@saas/shared/components/NavBar";
 import { cn } from "@ui/lib";
 import type { PropsWithChildren } from "react";

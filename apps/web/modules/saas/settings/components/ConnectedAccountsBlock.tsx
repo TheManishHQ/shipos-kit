@@ -1,6 +1,6 @@
 "use client";
 
-import { authClient } from "@repo/auth/client";
+import { authClient } from "@shipos/auth/client";
 import {
 	type OAuthProvider,
 	oAuthProviders,

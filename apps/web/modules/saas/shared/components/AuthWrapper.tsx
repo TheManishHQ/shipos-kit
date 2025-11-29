@@ -1,4 +1,4 @@
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { Footer } from "@saas/shared/components/Footer";
 import { ColorModeToggle } from "@shared/components/ColorModeToggle";
 import { LocaleSwitch } from "@shared/components/LocaleSwitch";

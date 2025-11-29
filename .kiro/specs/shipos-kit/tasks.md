@@ -151,7 +151,7 @@
     -   Set up avatars bucket configuration
     -   _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5_
 
--   [ ] 17. Set up internationalization
+-   [x] 17. Set up internationalization
 
     -   Install and configure next-intl 4.3.5 in packages/i18n/
     -   Create translation files for English and German
@@ -161,7 +161,7 @@
     -   Configure locale cookie management
     -   _Requirements: 15.1, 15.2, 15.3, 15.4, 15.5, 15.6, 15.7, 15.8_
 
--   [ ] 18. Build payment provider abstraction
+-   [x] 18. Build payment provider abstraction
 
     -   Create unified PaymentProvider interface in packages/payments/
     -   Define WebhookEvent interface for normalized events
@@ -169,7 +169,7 @@
     -   Create checkout session, customer portal, and subscription management methods
     -   _Requirements: 9.3, 9.4, 9.5_
 
--   [ ] 19. Integrate Stripe payment provider
+-   [x] 19. Integrate Stripe payment provider
 
     -   Install Stripe SDK in packages/payments/
     -   Implement StripeProvider class with PaymentProvider interface
@@ -180,18 +180,18 @@
     -   Map Stripe events to unified WebhookEvent format
     -   _Requirements: 9.1, 11.1_
 
--   [ ] 20. Integrate DodoPayments provider
+-   [x] 20. ~~Integrate DodoPayments provider~~ (REMOVED - Using Stripe only)
 
-    -   Install DodoPayments SDK in packages/payments/
-    -   Implement DodoPaymentsProvider class with PaymentProvider interface
-    -   Create checkout session creation with DodoPayments API
-    -   Implement customer portal link generation
-    -   Build subscription management methods
-    -   Implement HMAC SHA256 webhook signature verification
-    -   Map DodoPayments events to unified WebhookEvent format
+    -   ~~Install DodoPayments SDK in packages/payments/~~
+    -   ~~Implement DodoPaymentsProvider class with PaymentProvider interface~~
+    -   ~~Create checkout session creation with DodoPayments API~~
+    -   ~~Implement customer portal link generation~~
+    -   ~~Build subscription management methods~~
+    -   ~~Implement HMAC SHA256 webhook signature verification~~
+    -   ~~Map DodoPayments events to unified WebhookEvent format~~
     -   _Requirements: 9.2, 11.2_
 
--   [ ] 21. Build subscription management
+-   [x] 21. Build subscription management
 
     -   Create plan configuration in config with Free, Pro, Lifetime, Enterprise plans
     -   Build checkout session creation endpoint
@@ -202,11 +202,10 @@
     -   Add trial period support in checkout
     -   _Requirements: 10.1, 10.2, 10.5, 10.6, 10.7_
 
--   [ ] 22. Implement payment webhooks
+-   [x] 22. Implement payment webhooks
 
     -   Create webhook handler endpoint for Stripe
-    -   Create webhook handler endpoint for DodoPayments
-    -   Implement signature verification for both providers
+    -   Implement signature verification for Stripe
     -   Handle checkout.session.completed events
     -   Handle subscription.created events
     -   Handle subscription.updated events
@@ -216,7 +215,7 @@
     -   Add error logging for webhook failures
     -   _Requirements: 10.3, 10.4, 11.3, 11.4, 11.5, 11.6, 11.7, 23.3_
 
--   [ ] 23. Set up ORPC API infrastructure
+-   [x] 23. Set up ORPC API infrastructure
 
     -   Install ORPC packages in packages/api/
     -   Create base procedures: publicProcedure, protectedProcedure, adminProcedure

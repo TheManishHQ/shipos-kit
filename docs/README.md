@@ -43,9 +43,12 @@ Welcome to the Shipos Kit documentation. This is a production-ready SaaS starter
 
 -   [Payments](./payments.md) - Payment provider integration with Stripe (✅ Implemented)
 
+### API & Integrations
+
+-   [API](./api.md) - Type-safe API with ORPC (🚧 In Progress)
+
 ### Coming Soon
 
--   [API](./api.md) - Type-safe API with ORPC
 -   [AI](./ai.md) - AI chat system with OpenAI
 
 ## Quick Start
@@ -124,7 +127,7 @@ See [Implementation Status](./implementation-status.md) for detailed breakdown.
 -   🚫 **No Marketing Pages** - No homepage, pricing, blog
 -   🚫 **No Payments** - Stripe/DodoPayments not integrated
 -   🚫 **No AI** - OpenAI not integrated
--   🚫 **No API** - ORPC not set up
+-   🚧 **API Partial** - ORPC infrastructure set up, needs more endpoints
 -   🚫 **No Tests** - No test suite
 
 ## Development

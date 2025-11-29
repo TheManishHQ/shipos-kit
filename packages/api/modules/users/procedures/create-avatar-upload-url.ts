@@ -1,5 +1,4 @@
-import { config } from "@repo/config";
-import { getSignedUploadUrl } from "@repo/storage";
+import { getSignedUploadUrl } from "@shipos/storage";
 import { z } from "zod";
 import { protectedProcedure } from "../../../orpc/procedures";
 

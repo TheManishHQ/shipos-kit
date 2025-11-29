@@ -1,5 +1,5 @@
 import "server-only";
-import { auth } from "@repo/auth";
+import { auth } from "@shipos/auth";
 import { getInvitationById } from "@repo/database";
 import { headers } from "next/headers";
 import { cache } from "react";

@@ -1,8 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authClient } from "@repo/auth/client";
-import { config } from "@repo/config";
+import { authClient } from "@shipos/auth/client";
+import { config } from "@shipos/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
 import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";

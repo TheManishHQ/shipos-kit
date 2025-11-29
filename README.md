@@ -2,12 +2,12 @@
 
 A production-ready SaaS starter kit built with Next.js 15, React 19, and TypeScript.
 
-## ⚠️ Project Status: ~35% Complete
+## ⚠️ Project Status: ~47% Complete
 
 **This is a backend foundation, not a complete SaaS starter kit.**
 
-✅ **What works:** Authentication, email, storage, database (all backend/API)  
-❌ **What doesn't work:** User-facing pages, UI components, payments, AI
+✅ **What works:** Authentication, email, storage, database, payments, i18n (all backend/API)  
+❌ **What doesn't work:** User-facing pages, UI components, AI
 
 **📋 Read [CURRENT_STATUS.md](./CURRENT_STATUS.md) before proceeding.**
 
@@ -28,6 +28,7 @@ A production-ready SaaS starter kit built with Next.js 15, React 19, and TypeScr
 -   🗄️ Database (Prisma + PostgreSQL)
 -   🌍 Internationalization (English, German)
 -   👤 User management (profile, avatar, sessions)
+-   💳 Payments (Stripe integration)
 -   ⚙️ Configuration system
 -   📝 Logging system
 
@@ -38,7 +39,7 @@ A production-ready SaaS starter kit built with Next.js 15, React 19, and TypeScr
 -   🚫 No UI component library
 -   🚫 No theme switcher
 -   🚫 No marketing pages
--   🚫 No payment integration
+-   🚫 No payment UI (backend works)
 -   🚫 No AI features
 -   🚫 No tests
 
@@ -112,9 +113,9 @@ shipos-kit/
 │   ├── i18n/             # ✅ Internationalization (complete)
 │   ├── logs/             # ✅ Logging (complete)
 │   ├── utils/            # ✅ Utilities (complete)
+│   ├── payments/         # ✅ Payments (complete)
 │   ├── api/              # 🚧 Minimal (only users module)
-│   ├── ai/               # ❌ Empty
-│   └── payments/         # ❌ Empty
+│   └── ai/               # ❌ Empty
 ├── config/               # ✅ Configuration (complete)
 └── docs/                 # ✅ Documentation
 ```
@@ -131,6 +132,7 @@ shipos-kit/
 -   [Email](./docs/email.md) - Email system
 -   [Storage](./docs/storage.md) - File storage
 -   [i18n](./docs/i18n.md) - Internationalization
+-   [Payments](./docs/payments.md) - Stripe integration
 
 ## Recommendations
 
@@ -154,10 +156,9 @@ shipos-kit/
 3. **Dashboard** - Build main SaaS dashboard
 4. **Settings Pages** - Create profile, security, billing pages
 5. **API Setup** - Configure ORPC properly
-6. **Payments** - Integrate Stripe or DodoPayments
-7. **Testing** - Add E2E tests
+6. **Testing** - Add E2E tests
 
-**Estimated:** 5-6 weeks of full-time development
+**Estimated:** 4-5 weeks of full-time development
 
 ## Contributing
 

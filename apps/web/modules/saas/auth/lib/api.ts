@@ -1,5 +1,5 @@
-import { authClient } from "@repo/auth/client";
-import { config } from "@repo/config";
+import { authClient } from "@shipos/auth/client";
+import { config } from "@shipos/config";
 import { useQuery } from "@tanstack/react-query";
 
 export const sessionQueryKey = ["user", "session"] as const;

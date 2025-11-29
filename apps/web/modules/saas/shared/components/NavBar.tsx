@@ -1,5 +1,5 @@
 "use client";
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { UserMenu } from "@saas/shared/components/UserMenu";

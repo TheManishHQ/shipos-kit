@@ -182,6 +182,22 @@ pnpm db:studio
 -   New user welcome
 -   Newsletter signup
 
+### Payment System
+
+-   ✅ Stripe integration
+-   ✅ Checkout sessions (subscription & one-time)
+-   ✅ Customer portal
+-   ✅ Webhook handling
+-   ✅ Purchase tracking
+
+**Supported features:**
+
+-   Recurring subscriptions
+-   One-time payments
+-   Trial periods
+-   Seat management
+-   Subscription cancellation
+
 ### Internationalization
 
 -   ✅ English and German translations
@@ -500,10 +516,10 @@ pnpm install
 
 The following features are planned:
 
--   💳 **Payments** - Stripe and DodoPayments integration
 -   🤖 **AI** - OpenAI chat and image generation
 -   🔌 **API** - Type-safe API with ORPC
 -   👥 **Admin Panel** - User management (optional)
 -   🧪 **Testing** - E2E tests with Playwright
+-   🎨 **UI Components** - Complete component library
 
 Check the [tasks list](.kiro/specs/shipos-kit/tasks.md) for implementation progress.

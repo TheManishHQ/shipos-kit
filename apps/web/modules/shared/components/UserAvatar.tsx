@@ -1,4 +1,4 @@
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/components/avatar";
 import { useMemo } from "react";
 

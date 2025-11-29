@@ -1,6 +1,6 @@
 "use client";
 
-import { authClient } from "@repo/auth/client";
+import { authClient } from "@shipos/auth/client";
 import { config } from "@config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { Spinner } from "@shared/components/Spinner";

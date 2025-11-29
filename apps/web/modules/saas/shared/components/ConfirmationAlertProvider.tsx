@@ -35,7 +35,7 @@ const ConfirmationAlertContext = createContext<{
 export function ConfirmationAlertProvider({ children }: PropsWithChildren) {
 	const t = useTranslations();
 	const [confirmOptions, setConfirmOptions] = useState<ConfirmOptions | null>(
-		null,
+		null
 	);
 
 	const confirm = (options: ConfirmOptions) => {
@@ -48,7 +48,7 @@ export function ConfirmationAlertProvider({ children }: PropsWithChildren) {
 
 			<AlertDialog
 				open={!!confirmOptions}
-				onOpenChange={(open) =>
+				onOpenChange={(open: boolean) =>
 					setConfirmOptions(open ? confirmOptions : null)
 				}
 			>
@@ -93,7 +93,7 @@ export const useConfirmationAlert = () => {
 
 	if (!context) {
 		throw new Error(
-			"useConfirmationAlert must be used within a ConfirmationAlertProvider",
+			"useConfirmationAlert must be used within a ConfirmationAlertProvider"
 		);
 	}
 

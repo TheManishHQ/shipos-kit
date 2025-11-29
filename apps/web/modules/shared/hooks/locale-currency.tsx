@@ -1,4 +1,4 @@
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { useLocale } from "next-intl";
 
 export function useLocaleCurrency() {

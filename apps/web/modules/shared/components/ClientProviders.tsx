@@ -1,8 +1,8 @@
 "use client";
 
-import { AnalyticsScript } from "@analytics";
+// import { AnalyticsScript } from "@analytics";
 import { ProgressProvider } from "@bprogress/next/app";
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { ApiClientProvider } from "@shared/components/ApiClientProvider";
 import { ConsentBanner } from "@shared/components/ConsentBanner";
 import { Toaster } from "@ui/components/toast";
@@ -31,7 +31,7 @@ export function ClientProviders({ children }: PropsWithChildren) {
 
 						<Toaster position="top-right" />
 						<ConsentBanner />
-						<AnalyticsScript />
+						{/* <AnalyticsScript /> */}
 					</ApiClientProvider>
 				</ThemeProvider>
 			</ProgressProvider>
