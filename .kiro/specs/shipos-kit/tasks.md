@@ -319,7 +319,7 @@
     -   Create chat title editing
     -   _Requirements: 27.11_
 
--   [ ] 33. Build admin panel
+-   [x] 33. Build admin panel
 
     -   Create admin layout with navigation
     -   Build users list page with pagination
