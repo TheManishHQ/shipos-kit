@@ -1,6 +1,14 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
+import {
+	createDocSchema,
+	createMetaSchema,
+	transformMDX,
+} from "@fumadocs/content-collections/configuration";
 import rehypeShiki from "rehype-shiki";
+import { remarkImage } from "fumadocs-core/mdx-plugins";
+import { z } from "zod";
+import { config } from "@repo/config";
 
 const posts = defineCollection({
 	name: "posts",
@@ -50,6 +58,48 @@ const posts = defineCollection({
 	},
 });
 
+function sanitizePath(path: string) {
+	return path
+		.replace(/(\.[a-zA-Z-]{2,5})$/, "")
+		.replace(/^\//, "")
+		.replace(/\/$/, "")
+		.replace(/index$/, "");
+}
+
+function getLocaleFromFilePath(path: string) {
+	return (
+		path
+			.match(/(\.[a-zA-Z-]{2,5})+\.(md|mdx|json)$/)?.[1]
+			?.replace(".", "") ?? config.i18n.defaultLocale
+	);
+}
+
+const docs = defineCollection({
+	name: "docs",
+	directory: "content/docs",
+	include: "**/*.mdx",
+	schema: z.object(createDocSchema(z)),
+	transform: async (document, context) =>
+		transformMDX(document, context, {
+			remarkPlugins: [
+				[
+					remarkImage,
+					{
+						publicDir: "public",
+					},
+				],
+			],
+		}),
+});
+
+const docsMeta = defineCollection({
+	name: "docsMeta",
+	directory: "content/docs",
+	include: "**/meta*.json",
+	parser: "json",
+	schema: z.object(createMetaSchema(z)),
+});
+
 export default defineConfig({
-	collections: [posts],
+	collections: [posts, docs, docsMeta],
 });
