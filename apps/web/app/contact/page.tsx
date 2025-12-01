@@ -1,7 +1,7 @@
 import { ContactForm } from "@marketing/home/components/ContactForm";
 import { Footer } from "@marketing/shared/components/Footer";
 import { NavBar } from "@marketing/shared/components/NavBar";
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { redirect } from "next/navigation";
 
 export const metadata = {

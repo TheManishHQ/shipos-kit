@@ -1,5 +1,5 @@
 import { MDXContent } from "@content-collections/mdx/react";
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 import { File, Files, Folder } from "fumadocs-ui/components/files";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Step, Steps } from "fumadocs-ui/components/steps";

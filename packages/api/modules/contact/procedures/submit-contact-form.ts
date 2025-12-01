@@ -1,7 +1,7 @@
 import { ORPCError } from "@orpc/server";
-import { config } from "@repo/config";
-import { logger } from "@repo/logs";
-import { sendEmail } from "@repo/mail";
+import { config } from "@shipos/config";
+import { logger } from "@shipos/logs";
+import { sendEmail } from "@shipos/mail";
 import { publicProcedure } from "../../../orpc/procedures";
 import { contactFormSchema } from "../types";
 

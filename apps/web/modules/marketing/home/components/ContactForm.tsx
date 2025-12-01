@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	type ContactFormValues,
 	contactFormSchema,
-} from "@repo/api/modules/contact/types";
+} from "@shipos/api/modules/contact/types";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { useMutation } from "@tanstack/react-query";
 import { Alert, AlertTitle } from "@ui/components/alert";

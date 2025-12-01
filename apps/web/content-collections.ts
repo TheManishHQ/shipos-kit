@@ -8,7 +8,7 @@ import {
 import rehypeShiki from "rehype-shiki";
 import { remarkImage } from "fumadocs-core/mdx-plugins";
 import { z } from "zod";
-import { config } from "@repo/config";
+import { config } from "@shipos/config";
 
 const posts = defineCollection({
 	name: "posts",
