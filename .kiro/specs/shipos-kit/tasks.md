@@ -349,7 +349,7 @@
     -   Add multi-language blog post support
     -   _Requirements: 16.2, 16.3, 16.4, 16.9, 27.3_
 
--   [ ] 36. Build documentation site
+-   [x] 36. Build documentation site
 
     -   Install and configure Fumadocs
     -   Create documentation pages with MDX
