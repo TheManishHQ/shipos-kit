@@ -1,6 +1,6 @@
 import { createMDXSource } from "@fumadocs/content-collections";
 import { config } from "@shipos/config";
-import { allDocs, allDocsMetas } from "./.content-collections/generated";
+import { allDocs, allDocsMetas } from ".content-collections/generated";
 import { loader } from "fumadocs-core/source";
 import { Home } from "lucide-react";
 import { createElement } from "react";

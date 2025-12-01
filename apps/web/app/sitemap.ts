@@ -1,7 +1,7 @@
 import { getAllPosts } from "@marketing/blog/utils/posts";
 import { config } from "@shipos/config";
 import { getBaseUrl } from "@shipos/utils";
-import { allLegalPages } from "./.content-collections/generated";
+import { allLegalPages } from ".content-collections/generated";
 import type { MetadataRoute } from "next";
 import { docsSource } from "./docs-source";
 
