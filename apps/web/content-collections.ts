@@ -5,7 +5,7 @@ import {
 	createMetaSchema,
 	transformMDX,
 } from "@fumadocs/content-collections/configuration";
-import rehypeShiki from "rehype-shiki";
+import rehypeShiki from "@shikijs/rehype";
 import { remarkImage } from "fumadocs-core/mdx-plugins";
 import { z } from "zod";
 import { config } from "@shipos/config";
@@ -13,8 +13,8 @@ import { config } from "@shipos/config";
 const posts = defineCollection({
 	name: "posts",
 	directory: "content/posts",
-	include: "**/*.mdx",
-	schema: (z) => ({
+	include: "**/*.{mdx,md}",
+	schema: z.object({
 		title: z.string(),
 		date: z.string(),
 		image: z.string().optional(),
@@ -37,23 +37,30 @@ const posts = defineCollection({
 			],
 		});
 
-		// Extract locale from filename (e.g., "post.de.mdx" -> "de")
-		const localeMatch = document._meta.fileName.match(
-			/\.([a-zA-Z-]{2,5})\.(md|mdx)$/,
-		);
-		const locale = localeMatch ? localeMatch[1] : "en";
+		return {
+			...document,
+			body,
+			locale: getLocaleFromFilePath(document._meta.filePath),
+			path: sanitizePath(document._meta.path),
+		};
+	},
+});
 
-		// Sanitize path
-		let path = document._meta.path
-			.replace(/\.([a-zA-Z-]{2,5})\.(md|mdx)$/, "")
-			.replace(/\/$/, "")
-			.replace(/\/index$/, "");
+const legalPages = defineCollection({
+	name: "legalPages",
+	directory: "content/legal",
+	include: "**/*.{mdx,md}",
+	schema: z.object({
+		title: z.string(),
+	}),
+	transform: async (document, context) => {
+		const body = await compileMDX(context, document);
 
 		return {
 			...document,
 			body,
-			path,
-			locale,
+			locale: getLocaleFromFilePath(document._meta.filePath),
+			path: sanitizePath(document._meta.path),
 		};
 	},
 });
@@ -101,5 +108,5 @@ const docsMeta = defineCollection({
 });
 
 export default defineConfig({
-	collections: [posts, docs, docsMeta],
+	collections: [posts, legalPages, docs, docsMeta],
 });
