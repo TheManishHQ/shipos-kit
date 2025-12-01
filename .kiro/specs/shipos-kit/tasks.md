@@ -358,7 +358,7 @@
     -   Support multi-language documentation
     -   _Requirements: 16.5, 16.9, 27.4_
 
--   [ ] 37. Create legal and changelog pages
+-   [x] 37. Create legal and changelog pages
 
     -   Build changelog page with updates
     -   Create Terms of Service page
