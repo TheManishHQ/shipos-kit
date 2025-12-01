@@ -21,6 +21,7 @@ export const config = {
         enableSignup: true,
         enableMagicLink: true,
         enableSocialLogin: true,
+        enablePasskeys: false,
         enablePasswordLogin: true,
         enableTwoFactor: false,
         redirectAfterSignIn: '/app',
