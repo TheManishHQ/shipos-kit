@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { withContentCollections } from '@content-collections/next'
 import nextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = nextIntlPlugin('./modules/i18n/request.ts')
@@ -45,4 +46,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withNextIntl(nextConfig)
+export default withContentCollections(withNextIntl(nextConfig))
