@@ -439,7 +439,7 @@
     -   Test XSS protection with React escaping
     -   _Requirements: 23.1, 23.2, 23.3, 23.4, 23.7, 23.8, 23.9_
 
--   [ ] 46. Add database indexing
+-   [x] 46. Add database indexing
 
     -   Add index on User.email field
     -   Add index on Purchase.subscriptionId field
