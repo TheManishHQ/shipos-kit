@@ -1,4 +1,4 @@
-import { allPosts } from "content-collections";
+import { allPosts } from "./.content-collections/generated";
 
 export type Post = (typeof allPosts)[0];
 

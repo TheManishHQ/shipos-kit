@@ -36,7 +36,6 @@ export default [
     "structuredData": {
       "contents": [
         {
-          "heading": undefined,
           "content": "Welcome to the Shipos Kit documentation. Here you will find all the information you need to build and deploy your SaaS application."
         },
         {

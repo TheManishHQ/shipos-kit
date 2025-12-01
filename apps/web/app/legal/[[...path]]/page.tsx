@@ -1,7 +1,7 @@
 import { MDXContent } from "@content-collections/mdx/react";
 import { Footer } from "@marketing/shared/components/Footer";
 import { NavBar } from "@marketing/shared/components/NavBar";
-import { allLegalPages } from "content-collections";
+import { allLegalPages } from "./.content-collections/generated";
 import { notFound } from "next/navigation";
 
 type Params = {
