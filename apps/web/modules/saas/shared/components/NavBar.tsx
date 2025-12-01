@@ -1,34 +1,27 @@
 "use client";
 import { config } from "@shipos/config";
 import { useSession } from "@saas/auth/hooks/use-session";
-import { useActiveOrganization } from "@saas/organizations/hooks/use-active-organization";
 import { UserMenu } from "@saas/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import { cn } from "@ui/lib";
 import {
 	BotMessageSquareIcon,
-	ChevronRightIcon,
 	HomeIcon,
 	SettingsIcon,
 	UserCog2Icon,
-	UserCogIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { OrganzationSelect } from "../../organizations/components/OrganizationSelect";
 
 export function NavBar() {
 	const t = useTranslations();
 	const pathname = usePathname();
 	const { user } = useSession();
-	const { activeOrganization } = useActiveOrganization();
 
 	const { useSidebarLayout } = config.ui.saas;
 
-	const basePath = activeOrganization
-		? `/app/${activeOrganization.slug}`
-		: "/app";
+	const basePath = "/app";
 
 	const menuItems = [
 		{
@@ -39,151 +32,94 @@ export function NavBar() {
 		},
 		{
 			label: t("app.menu.aiChatbot"),
-			href: activeOrganization
-				? `/app/${activeOrganization.slug}/chatbot`
-				: "/app/chatbot",
+			href: "/app/chat",
 			icon: BotMessageSquareIcon,
-			isActive: pathname.includes("/chatbot"),
+			isActive: pathname.includes("/chat"),
 		},
-		...(activeOrganization && !config.organizations.hideOrganization
-			? [
-					{
-						label: t("app.menu.organizationSettings"),
-						href: `${basePath}/settings`,
-						icon: SettingsIcon,
-						isActive: pathname.startsWith(`${basePath}/settings/`),
-					},
-				]
-			: []),
 		{
-			label: t("app.menu.accountSettings"),
+			label: t("app.menu.settings"),
 			href: "/app/settings",
-			icon: UserCog2Icon,
-			isActive: pathname.startsWith("/app/settings/"),
+			icon: SettingsIcon,
+			isActive: pathname.includes("/app/settings"),
 		},
 		...(user?.role === "admin"
 			? [
 					{
 						label: t("app.menu.admin"),
 						href: "/app/admin",
-						icon: UserCogIcon,
-						isActive: pathname.startsWith("/app/admin/"),
+						icon: UserCog2Icon,
+						isActive: pathname.includes("/app/admin"),
 					},
 				]
 			: []),
 	];
 
-	return (
-		<nav
-			className={cn("w-full", {
-				"w-full md:fixed md:top-0 md:left-0 md:h-full md:w-[280px]":
-					useSidebarLayout,
-			})}
-		>
-			<div
-				className={cn("container max-w-6xl py-4", {
-					"container max-w-6xl py-4 md:flex md:h-full md:flex-col md:px-6 md:pt-6 md:pb-0":
-						useSidebarLayout,
-				})}
-			>
-				<div className="flex flex-wrap items-center justify-between gap-4">
-					<div
-						className={cn("flex items-center gap-4 md:gap-2", {
-							"md:flex md:w-full md:flex-col md:items-stretch md:align-stretch":
-								useSidebarLayout,
-						})}
-					>
-						<Link href="/app" className="block">
-							<Logo />
-						</Link>
-
-						{config.organizations.enable &&
-							!config.organizations.hideOrganization && (
-								<>
-									<span
-										className={cn(
-											"hidden opacity-30 md:block",
-											{
-												"md:hidden": useSidebarLayout,
-											},
-										)}
-									>
-										<ChevronRightIcon className="size-4" />
-									</span>
-
-									<OrganzationSelect
-										className={cn({
-											"md:-mx-2 md:mt-2":
-												useSidebarLayout,
-										})}
-									/>
-								</>
-							)}
-					</div>
-
-					<div
-						className={cn(
-							"mr-0 ml-auto flex items-center justify-end gap-4",
-							{
-								"md:hidden": useSidebarLayout,
-							},
-						)}
-					>
-						<UserMenu />
-					</div>
+	if (useSidebarLayout) {
+		return (
+			<nav className="sticky top-0 z-10 flex w-full items-center gap-4 border-border border-b bg-background p-4 md:w-64 md:flex-col md:items-stretch md:gap-8 md:border-b-0 md:border-r md:p-6">
+				<div className="flex items-center gap-4 md:flex-col md:items-stretch">
+					<Link href="/app" className="block">
+						<Logo />
+					</Link>
 				</div>
 
 				<ul
 					className={cn(
-						"no-scrollbar -mx-4 -mb-4 mt-6 flex list-none items-center justify-start gap-4 overflow-x-auto px-4 text-sm",
-						{
-							"md:mx-0 md:my-4 md:flex md:flex-col md:items-stretch md:gap-1 md:px-0":
-								useSidebarLayout,
-						},
+						"hidden w-full flex-col gap-2 md:flex md:flex-1",
 					)}
 				>
-					{menuItems.map((menuItem) => (
-						<li key={menuItem.href}>
+					{menuItems.map((item) => (
+						<li key={item.href}>
 							<Link
-								href={menuItem.href}
+								href={item.href}
 								className={cn(
-									"flex items-center gap-2 whitespace-nowrap border-b-2 px-1 pb-3",
-									[
-										menuItem.isActive
-											? "border-primary font-bold"
-											: "border-transparent",
-									],
+									"flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
 									{
-										"md:-mx-6 md:border-b-0 md:border-l-2 md:px-6 md:py-2":
-											useSidebarLayout,
+										"bg-muted": item.isActive,
 									},
 								)}
-								prefetch
 							>
-								<menuItem.icon
-									className={`size-4 shrink-0 ${
-										menuItem.isActive
-											? "text-primary"
-											: "opacity-50"
-									}`}
-								/>
-								<span>{menuItem.label}</span>
+								<item.icon className="size-4" />
+								{item.label}
 							</Link>
 						</li>
 					))}
 				</ul>
 
-				<div
-					className={cn(
-						"-mx-4 md:-mx-6 mt-auto mb-0 hidden p-4 md:p-4",
-						{
-							"md:block": useSidebarLayout,
-						},
-					)}
-				>
-					<UserMenu showUserName />
+				<div className="ml-auto md:ml-0">
+					<UserMenu />
 				</div>
+			</nav>
+		);
+	}
+
+	return (
+		<nav className="sticky top-0 z-10 flex items-center justify-between border-border border-b bg-background p-4">
+			<div className="flex items-center gap-8">
+				<Link href="/app">
+					<Logo />
+				</Link>
+
+				<ul className="hidden items-center gap-6 md:flex">
+					{menuItems.map((item) => (
+						<li key={item.href}>
+							<Link
+								href={item.href}
+								className={cn(
+									"text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
+									{
+										"text-foreground": item.isActive,
+									},
+								)}
+							>
+								{item.label}
+							</Link>
+						</li>
+					))}
+				</ul>
 			</div>
+
+			<UserMenu />
 		</nav>
 	);
 }

@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@shipos/auth/client";
 import { config } from "@shipos/config";
 import { useAuthErrorMessages } from "@saas/auth/hooks/errors-messages";
-import { OrganizationInvitationAlert } from "@saas/organizations/components/OrganizationInvitationAlert";
 import { Alert, AlertDescription, AlertTitle } from "@ui/components/alert";
 import { Button } from "@ui/components/button";
 import {
@@ -128,10 +127,6 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 				</Alert>
 			) : (
 				<>
-					{invitationId && (
-						<OrganizationInvitationAlert className="mb-6" />
-					)}
-
 					<Form {...form}>
 						<form
 							className="flex flex-col items-stretch gap-4"
