@@ -374,7 +374,7 @@
     -   Add success/error notifications
     -   _Requirements: 16.7, 27.6_
 
--   [ ] 39. Build user onboarding flow
+-   [x] 39. Build user onboarding flow
 
     -   Create onboarding page with form
     -   Implement onboarding completion tracking
