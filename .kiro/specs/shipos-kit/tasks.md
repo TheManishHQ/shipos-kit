@@ -419,7 +419,7 @@
     -   Create example homepage test
     -   _Requirements: 22.1, 22.2, 22.3, 22.4, 22.5, 22.6_
 
--   [ ]\* 44. Write E2E tests for critical flows
+-   [x] 44. Write E2E tests for critical flows
 
     -   Write signup and email verification test
     -   Create login test
