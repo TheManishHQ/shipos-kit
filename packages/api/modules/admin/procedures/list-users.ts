@@ -7,11 +7,29 @@ export const listUsers = adminProcedure
 		z.object({
 			limit: z.number().min(1).max(100).default(10),
 			offset: z.number().min(0).default(0),
+			query: z.string().optional(),
 		}),
 	)
+	.route({
+		method: "GET",
+		path: "/admin/users",
+		tags: ["Admin"],
+		summary: "List users",
+		description: "List all users with pagination and search",
+	})
 	.handler(async ({ input }) => {
+		const where = input.query
+			? {
+					OR: [
+						{ name: { contains: input.query, mode: "insensitive" as const } },
+						{ email: { contains: input.query, mode: "insensitive" as const } },
+					],
+				}
+			: {};
+
 		const [users, total] = await Promise.all([
 			prisma.user.findMany({
+				where,
 				take: input.limit,
 				skip: input.offset,
 				orderBy: {
@@ -25,9 +43,12 @@ export const listUsers = adminProcedure
 					image: true,
 					createdAt: true,
 					role: true,
+					banned: true,
+					banReason: true,
+					banExpires: true,
 				},
 			}),
-			prisma.user.count(),
+			prisma.user.count({ where }),
 		]);
 
 		return {
