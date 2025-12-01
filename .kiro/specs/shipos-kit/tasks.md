@@ -409,7 +409,7 @@
     -   Include timestamps and metadata in logs
     -   _Requirements: 20.11_
 
--   [ ] 43. Set up Playwright testing
+-   [x] 43. Set up Playwright testing
 
     -   Install Playwright in apps/web/
     -   Configure Playwright with test directory and base URL
