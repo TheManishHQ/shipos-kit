@@ -40,5 +40,9 @@
 	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx,json,css}": "biome check --write --no-errors-on-unmatched"
+	},
+	"dependencies": {
+		"@orpc/client": "^1.12.1",
+		"@orpc/server": "^1.12.1"
 	}
 }

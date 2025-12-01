@@ -7,8 +7,10 @@ import {
 } from "@shipos/database";
 import { z } from "zod";
 import { protectedProcedure } from "../../orpc/procedures";
-import { generateChatResponse, type ChatMessage } from "@shipos/ai";
-import { generateChatTitle } from "@shipos/ai";
+import { streamText, textModel, convertToModelMessages } from "@shipos/ai";
+import type { UIMessage } from "@shipos/ai/client";
+import { streamToEventIterator } from "@orpc/client";
+import { type as orpcType } from "@orpc/server";
 
 // Create a new chat
 const createChat = protectedProcedure
@@ -32,7 +34,7 @@ const createChat = protectedProcedure
             title: input.title,
         });
 
-        return chat;
+        return { chat };
     });
 
 // List user's chats
@@ -59,7 +61,12 @@ const listChats = protectedProcedure
             offset: input.offset,
         });
 
-        return chats;
+        return {
+            chats: chats.map((chat) => ({
+                ...chat,
+                messages: (chat.messages ?? []) as unknown as UIMessage[],
+            })),
+        };
     });
 
 // Get a specific chat
@@ -90,29 +97,28 @@ const getChat = protectedProcedure
             throw new Error("Unauthorized");
         }
 
-        return chat;
+        return {
+            chat: {
+                ...chat,
+                messages: (chat.messages ?? []) as unknown as UIMessage[],
+            },
+        };
     });
 
-// Add a message to a chat and get AI response
+// Add a message to a chat and get AI response (streaming)
 const addMessage = protectedProcedure
-    .input(
-        z.object({
-            chatId: z.string(),
-            message: z.string().min(1).max(4000),
-        }),
-    )
     .route({
         method: "POST",
         path: "/ai/chats/{chatId}/messages",
         tags: ["AI"],
         summary: "Add message",
-        description: "Add a message to a chat and get AI response",
+        description: "Add a message to a chat and get AI response with streaming",
     })
+    .input(orpcType<{ chatId: string; messages: UIMessage[] }>())
     .handler(async ({ input, context }) => {
-        const { user } = context;
-        const { chatId, message } = input;
+        const { chatId, messages } = input;
+        const user = context.user;
 
-        // Get the chat
         const chat = await getAiChatById(chatId);
 
         if (!chat) {
@@ -124,44 +130,24 @@ const addMessage = protectedProcedure
             throw new Error("Unauthorized");
         }
 
-        // Parse existing messages
-        const messages = (chat.messages as unknown as ChatMessage[]) || [];
-
-        // Add user message
-        const userMessage: ChatMessage = {
-            role: "user",
-            content: message,
-            createdAt: new Date(),
-        };
-        messages.push(userMessage);
-
-        // Generate AI response
-        const aiResponse = await generateChatResponse({
-            messages,
+        const response = streamText({
+            model: textModel,
+            messages: convertToModelMessages(messages),
+            async onFinish({ text }) {
+                await updateAiChat({
+                    id: chatId,
+                    messages: [
+                        ...messages,
+                        {
+                            role: "assistant",
+                            parts: [{ type: "text", text }],
+                        },
+                    ],
+                });
+            },
         });
 
-        // Add AI message
-        const aiMessage: ChatMessage = {
-            role: "assistant",
-            content: aiResponse,
-            createdAt: new Date(),
-        };
-        messages.push(aiMessage);
-
-        // Generate title if this is the first message
-        let title = chat.title;
-        if (!title && messages.length === 2) {
-            title = generateChatTitle(message);
-        }
-
-        // Update chat
-        const updatedChat = await updateAiChat({
-            id: chatId,
-            messages,
-            title: title || undefined,
-        });
-
-        return updatedChat;
+        return streamToEventIterator(response.toUIMessageStream());
     });
 
 // Update a chat
@@ -313,12 +299,16 @@ const transcribeAudio = protectedProcedure
 	});
 
 export const aiRouter = {
-	createChat,
-	listChats,
-	getChat,
-	addMessage,
-	updateChat,
-	deleteChat,
+	chats: {
+		list: listChats,
+		find: getChat,
+		create: createChat,
+		update: updateChat,
+		delete: deleteChat,
+		messages: {
+			add: addMessage,
+		},
+	},
 	generateImage,
 	transcribeAudio,
 };
