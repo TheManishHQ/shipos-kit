@@ -1,16 +1,13 @@
 import { config } from "@shipos/config";
-import { userAccountQueryKey, userPasskeyQueryKey } from "@saas/auth/lib/api";
+import { userAccountQueryKey } from "@saas/auth/lib/api";
 import {
 	getSession,
 	getUserAccounts,
-	getUserPasskeys,
 } from "@saas/auth/lib/server";
 import { ActiveSessionsBlock } from "@saas/settings/components/ActiveSessionsBlock";
 import { ChangePasswordForm } from "@saas/settings/components/ChangePasswordForm";
 import { ConnectedAccountsBlock } from "@saas/settings/components/ConnectedAccountsBlock";
-import { PasskeysBlock } from "@saas/settings/components/PasskeysBlock";
 import { SetPasswordForm } from "@saas/settings/components/SetPasswordForm";
-import { TwoFactorBlock } from "@saas/settings/components/TwoFactorBlock";
 import { SettingsList } from "@saas/shared/components/SettingsList";
 import { getServerQueryClient } from "@shared/lib/server";
 import { redirect } from "next/navigation";
@@ -44,13 +41,6 @@ export default async function AccountSettingsPage() {
 		queryFn: () => getUserAccounts(),
 	});
 
-	if (config.auth.enablePasskeys) {
-		await queryClient.prefetchQuery({
-			queryKey: userPasskeyQueryKey,
-			queryFn: () => getUserPasskeys(),
-		});
-	}
-
 	return (
 		<SettingsList>
 			{config.auth.enablePasswordLogin &&
@@ -60,8 +50,6 @@ export default async function AccountSettingsPage() {
 					<SetPasswordForm />
 				))}
 			{config.auth.enableSocialLogin && <ConnectedAccountsBlock />}
-			{config.auth.enablePasskeys && <PasskeysBlock />}
-			{config.auth.enableTwoFactor && <TwoFactorBlock />}
 			<ActiveSessionsBlock />
 		</SettingsList>
 	);
