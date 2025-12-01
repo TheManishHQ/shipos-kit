@@ -382,7 +382,7 @@
     -   Make onboarding configurable via feature flag
     -   _Requirements: 26.1, 26.2, 26.3, 26.4, 26.5, 27.13_
 
--   [ ] 40. Implement plan selection page
+-   [x] 40. Implement plan selection page
 
     -   Create plan selection page at /choose-plan
     -   Display all available plans with pricing
