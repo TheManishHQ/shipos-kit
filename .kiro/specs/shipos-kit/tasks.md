@@ -448,7 +448,7 @@
     -   Run migration to apply indexes
     -   _Requirements: 8.2, 8.3, 8.8_
 
--   [ ] 47. Set up environment variables
+-   [x] 47. Set up environment variables
 
     -   Create .env.example with all required variables
     -   Document DATABASE_URL configuration
