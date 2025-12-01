@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import { prisma } from "../client";
-import type { UserSchema } from "../zod";
+import type { UserSchema } from "../zod/index";
 
 export async function getUserById(id: string) {
     return prisma.user.findUnique({

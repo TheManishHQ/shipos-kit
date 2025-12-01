@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import { prisma } from "../client";
-import type { PurchaseSchema } from "../zod";
+import type { PurchaseSchema } from "../zod/index";
 
 export async function getPurchaseById(id: string) {
     return prisma.purchase.findUnique({
