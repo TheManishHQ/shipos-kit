@@ -340,7 +340,7 @@
     -   Style with marketing layout
     -   _Requirements: 16.1, 16.7, 16.8, 27.1, 27.2, 28.2, 28.5_
 
--   [ ] 35. Set up blog system
+-   [x] 35. Set up blog system
 
     -   Configure MDX for blog posts
     -   Create blog listing page
