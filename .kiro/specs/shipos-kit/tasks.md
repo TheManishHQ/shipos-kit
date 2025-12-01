@@ -309,7 +309,7 @@
     -   Implement account deletion with subscription cancellation
     -   _Requirements: 27.10, 5.7, 28.3_
 
--   [ ] 32. Implement AI chat interface
+-   [x] 32. Implement AI chat interface
 
     -   Create chat list sidebar component
     -   Build chat message display component
