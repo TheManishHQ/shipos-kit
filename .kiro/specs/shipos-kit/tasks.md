@@ -329,7 +329,7 @@
     -   Implement admin route protection
     -   _Requirements: 17.1, 17.2, 17.3, 17.4, 17.5, 27.12_
 
--   [ ] 34. Create marketing homepage
+-   [x] 34. Create marketing homepage
 
     -   Build hero section with CTA
     -   Create features section
