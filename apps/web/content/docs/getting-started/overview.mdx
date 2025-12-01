@@ -1,0 +1,81 @@
+---
+title: Overview
+description: Get started with Shipos Kit and build your SaaS application
+---
+
+Welcome to Shipos Kit! This guide will help you get started with building your SaaS application.
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+- Node.js 20 or later
+- pnpm 9 or later
+- PostgreSQL database
+- Git
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/shipos-kit.git
+cd shipos-kit
+```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Set up environment variables:
+
+```bash
+cp .env.example .env
+```
+
+Edit the `.env` file and add your configuration:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/mydb"
+NEXTAUTH_SECRET="your-secret-key"
+STRIPE_SECRET_KEY="your-stripe-secret"
+OPENAI_API_KEY="your-openai-key"
+```
+
+4. Run database migrations:
+
+```bash
+pnpm db:push
+```
+
+5. Start the development server:
+
+```bash
+pnpm dev
+```
+
+Your application should now be running at `http://localhost:3000`.
+
+## Project Structure
+
+The project follows a monorepo structure:
+
+- `apps/web` - Next.js web application
+- `packages/api` - API layer with ORPC
+- `packages/auth` - Authentication with better-auth
+- `packages/database` - Prisma database client
+- `packages/ui` - Shared UI components
+- `packages/config` - Shared configuration
+
+## Next Steps
+
+Now that you have Shipos Kit running, you can:
+
+- Explore the codebase
+- Customize the UI components
+- Add new features
+- Deploy to production
+
+Check out the rest of the documentation to learn more about each feature.
