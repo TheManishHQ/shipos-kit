@@ -390,7 +390,7 @@
     -   Implement redirect to checkout session
     -   _Requirements: 27.13_
 
--   [ ] 41. Set up SEO and metadata
+-   [x] 41. Set up SEO and metadata
 
     -   Create dynamic sitemap generation at /sitemap.xml
     -   Generate robots.txt at /robots.txt
