@@ -31,7 +31,8 @@ var posts = defineCollection({
         [
           rehypeShiki,
           {
-            theme: "nord"
+            theme: "nord",
+            langs: ["env", "bash", "typescript", "javascript", "json", "tsx", "jsx", "css", "html", "markdown", "yaml", "yml"]
           }
         ]
       ]

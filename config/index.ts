@@ -2,14 +2,9 @@ export const config = {
     appName: 'Shipos Kit',
 
     i18n: {
-        enabled: true,
-        locales: {
-            en: { currency: 'USD', label: 'English' },
-            de: { currency: 'USD', label: 'Deutsch' },
-        },
+        enabled: false,
         defaultLocale: 'en' as const,
         defaultCurrency: 'USD',
-        localeCookieName: 'NEXT_LOCALE',
     },
 
     users: {

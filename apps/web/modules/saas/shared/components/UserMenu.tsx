@@ -29,12 +29,10 @@ import {
 	SunIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 
 export function UserMenu({ showUserName }: { showUserName?: boolean }) {
-	const t = useTranslations();
 	const { user } = useSession();
 	const { setTheme: setCurrentTheme, theme: currentTheme } = useTheme();
 	const [theme, setTheme] = useState<string>(currentTheme ?? "system");
@@ -81,7 +79,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 			<DropdownMenuTrigger asChild>
 				<button
 					type="button"
-					className="flex cursor-pointer w-full items-center justify-between gap-2 rounded-lg outline-hidden focus-visible:ring-2 focus-visible:ring-primary md:w-[100%+1rem] md:px-2 md:py-1.5 md:hover:bg-primary/5"
+					className="flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1.5 outline-hidden transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
 					aria-label="User menu"
 				>
 					<span className="flex items-center gap-2">
@@ -116,7 +114,7 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 				<DropdownMenuSub>
 					<DropdownMenuSubTrigger>
 						<SunIcon className="mr-2 size-4" />
-						{t("app.userMenu.colorMode")}
+						Color Mode
 					</DropdownMenuSubTrigger>
 					<DropdownMenuPortal>
 						<DropdownMenuSubContent>
@@ -146,27 +144,27 @@ export function UserMenu({ showUserName }: { showUserName?: boolean }) {
 				<DropdownMenuItem asChild>
 					<Link href="/app/settings/general">
 						<SettingsIcon className="mr-2 size-4" />
-						{t("app.userMenu.accountSettings")}
+						Account Settings
 					</Link>
 				</DropdownMenuItem>
 
 				<DropdownMenuItem asChild>
 					<a href="https://supastarter.dev/docs/nextjs">
 						<BookIcon className="mr-2 size-4" />
-						{t("app.userMenu.documentation")}
+						Documentation
 					</a>
 				</DropdownMenuItem>
 
 				<DropdownMenuItem asChild>
 					<Link href="/">
 						<HomeIcon className="mr-2 size-4" />
-						{t("app.userMenu.home")}
+						Home
 					</Link>
 				</DropdownMenuItem>
 
 				<DropdownMenuItem onClick={onLogout}>
 					<LogOutIcon className="mr-2 size-4" />
-					{t("app.userMenu.logout")}
+					Logout
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

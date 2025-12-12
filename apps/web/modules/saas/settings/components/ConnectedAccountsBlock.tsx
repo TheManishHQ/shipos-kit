@@ -10,11 +10,8 @@ import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { Button } from "@ui/components/button";
 import { Skeleton } from "@ui/components/skeleton";
 import { CheckCircle2Icon, LinkIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 
 export function ConnectedAccountsBlock() {
-	const t = useTranslations();
-
 	const { data, isPending } = useUserAccountsQuery();
 
 	const isProviderLinked = (provider: OAuthProvider) =>
@@ -32,7 +29,7 @@ export function ConnectedAccountsBlock() {
 
 	return (
 		<SettingsItem
-			title={t("settings.account.security.connectedAccounts.title")}
+			title="Connected Accounts"
 		>
 			<div className="grid grid-cols-1 divide-y">
 				{Object.entries(oAuthProviders).map(
@@ -67,9 +64,7 @@ export function ConnectedAccountsBlock() {
 									>
 										<LinkIcon className="mr-1.5 size-4" />
 										<span>
-											{t(
-												"settings.account.security.connectedAccounts.connect"
-											)}
+											Connect
 										</span>
 									</Button>
 								)}

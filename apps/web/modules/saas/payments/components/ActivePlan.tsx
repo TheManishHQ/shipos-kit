@@ -1,19 +1,16 @@
 "use client";
 
 import { Card } from "@ui/components/card";
-import { useTranslations } from "next-intl";
 
 export function ActivePlan({ purchases }: { purchases?: any[] }) {
-	const t = useTranslations();
-
 	if (!purchases || purchases.length === 0) {
 		return (
 			<Card className="p-6">
 				<h3 className="font-semibold text-lg mb-2">
-					{t("saas.billing.activePlan.title")}
+					Active Plan
 				</h3>
 				<p className="text-muted-foreground text-sm">
-					{t("saas.billing.activePlan.noPlan")}
+					No active plan
 				</p>
 			</Card>
 		);
@@ -24,7 +21,7 @@ export function ActivePlan({ purchases }: { purchases?: any[] }) {
 	return (
 		<Card className="p-6">
 			<h3 className="font-semibold text-lg mb-2">
-				{t("saas.billing.activePlan.title")}
+				Active Plan
 			</h3>
 			{activePurchase ? (
 				<div>

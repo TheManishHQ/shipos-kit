@@ -9,22 +9,8 @@ import {
 	openAPI,
 	username,
 } from 'better-auth/plugins'
-import { parse as parseCookies } from 'cookie'
-
-function getLocaleFromRequest(request?: Request | any): keyof typeof config.i18n.locales {
-	if (!request) return config.i18n.defaultLocale
-
-	// Handle both Request and GenericEndpointContext
-	const cookieHeader = request.headers?.get?.('cookie') ?? request.headers?.cookie ?? ''
-	const cookies = parseCookies(cookieHeader)
-	const locale = cookies[config.i18n.localeCookieName]
-
-	// Validate locale is one of the supported locales
-	if (locale && locale in config.i18n.locales) {
-		return locale as keyof typeof config.i18n.locales
-	}
-
-	return config.i18n.defaultLocale
+function getLocaleFromRequest(): 'en' {
+	return 'en'
 }
 
 function getBaseUrl(): string {

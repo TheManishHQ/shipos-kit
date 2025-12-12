@@ -3,21 +3,30 @@ import { config } from "@shipos/config";
 import { useSession } from "@saas/auth/hooks/use-session";
 import { UserMenu } from "@saas/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
+import { Button } from "@ui/components/button";
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@ui/components/sheet";
 import { cn } from "@ui/lib";
 import {
-	BotMessageSquareIcon,
-	HomeIcon,
-	SettingsIcon,
-	UserCog2Icon,
+	BotMessageSquare,
+	Home,
+	Menu,
+	Settings,
+	UserCog2,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 export function NavBar() {
-	const t = useTranslations();
 	const pathname = usePathname();
 	const { user } = useSession();
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	const { useSidebarLayout } = config.ui.saas;
 
@@ -25,71 +34,105 @@ export function NavBar() {
 
 	const menuItems = [
 		{
-			label: t("app.menu.start"),
+			label: "Start",
 			href: basePath,
-			icon: HomeIcon,
+			icon: Home,
 			isActive: pathname === basePath,
 		},
 		{
-			label: t("app.menu.aiChatbot"),
+			label: "AI Chatbot",
 			href: "/app/chat",
-			icon: BotMessageSquareIcon,
+			icon: BotMessageSquare,
 			isActive: pathname.includes("/chat"),
 		},
 		{
-			label: t("app.menu.settings"),
+			label: "Settings",
 			href: "/app/settings",
-			icon: SettingsIcon,
+			icon: Settings,
 			isActive: pathname.includes("/app/settings"),
 		},
 		...(user?.role === "admin"
 			? [
 					{
-						label: t("app.menu.admin"),
+						label: "Admin",
 						href: "/app/admin",
-						icon: UserCog2Icon,
+						icon: UserCog2,
 						isActive: pathname.includes("/app/admin"),
 					},
 				]
 			: []),
 	];
 
-	if (useSidebarLayout) {
-		return (
-			<nav className="sticky top-0 z-10 flex w-full items-center gap-4 border-border border-b bg-background p-4 md:w-64 md:flex-col md:items-stretch md:gap-8 md:border-b-0 md:border-r md:p-6">
-				<div className="flex items-center gap-4 md:flex-col md:items-stretch">
-					<Link href="/app" className="block">
-						<Logo />
-					</Link>
-				</div>
-
-				<ul
-					className={cn(
-						"hidden w-full flex-col gap-2 md:flex md:flex-1",
-					)}
-				>
-					{menuItems.map((item) => (
+	const MenuContent = () => (
+		<>
+			<ul className="flex flex-1 flex-col gap-1">
+				{menuItems.map((item) => {
+					const Icon = item.icon;
+					return (
 						<li key={item.href}>
 							<Link
 								href={item.href}
+								onClick={() => setMobileMenuOpen(false)}
 								className={cn(
-									"flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
+									"flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted",
 									{
-										"bg-muted": item.isActive,
+										"bg-muted text-foreground": item.isActive,
+										"text-muted-foreground": !item.isActive,
 									},
 								)}
 							>
-								<item.icon className="size-4" />
-								{item.label}
+								<Icon className="size-5 shrink-0" />
+								<span>{item.label}</span>
 							</Link>
 						</li>
-					))}
-				</ul>
+					);
+				})}
+			</ul>
+			<div className="mt-auto border-t border-border pt-4">
+				<UserMenu showUserName />
+			</div>
+		</>
+	);
 
-				<div className="ml-auto md:ml-0">
-					<UserMenu />
-				</div>
-			</nav>
+	if (useSidebarLayout) {
+		return (
+			<>
+				{/* Mobile Menu */}
+				<Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+					<SheetTrigger asChild>
+						<Button
+							variant="ghost"
+							size="icon"
+							className="fixed left-4 top-4 z-50 md:hidden"
+							aria-label="Open menu"
+						>
+							<Menu className="size-5" />
+						</Button>
+					</SheetTrigger>
+					<SheetContent side="left" className="w-64 p-0">
+						<SheetHeader className="border-b border-border p-6">
+							<SheetTitle>
+								<Logo />
+							</SheetTitle>
+						</SheetHeader>
+						<div className="flex h-[calc(100vh-80px)] flex-col p-6">
+							<MenuContent />
+						</div>
+					</SheetContent>
+				</Sheet>
+
+				{/* Desktop Sidebar */}
+				<nav className="fixed left-0 top-0 z-40 hidden h-screen w-64 flex-col border-r border-border bg-background p-6 md:flex">
+					{/* Logo */}
+					<div className="mb-8">
+						<Link href="/app" className="block">
+							<Logo />
+						</Link>
+					</div>
+
+					<MenuContent />
+				</nav>
+			</>
 		);
 	}
 

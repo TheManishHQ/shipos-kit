@@ -1,46 +1,37 @@
 import type { AuthClientErrorCodes } from "@shipos/auth/client";
-import { useTranslations } from "next-intl";
 
 export function useAuthErrorMessages() {
-	const t = useTranslations();
-
-	const authErrorMessages: Partial<AuthClientErrorCodes> = {
-		INVALID_EMAIL_OR_PASSWORD: t("auth.errors.invalidEmailOrPassword"),
-		USER_NOT_FOUND: t("auth.errors.userNotFound"),
-		FAILED_TO_CREATE_USER: t("auth.errors.failedToCreateUser"),
-		FAILED_TO_CREATE_SESSION: t("auth.errors.failedToCreateSession"),
-		FAILED_TO_UPDATE_USER: t("auth.errors.failedToUpdateUser"),
-		FAILED_TO_GET_SESSION: t("auth.errors.failedToGetSession"),
-		INVALID_PASSWORD: t("auth.errors.invalidPassword"),
-		INVALID_EMAIL: t("auth.errors.invalidEmail"),
-		INVALID_TOKEN: t("auth.errors.invalidToken"),
-		CREDENTIAL_ACCOUNT_NOT_FOUND: t(
-			"auth.errors.credentialAccountNotFound",
-		),
-		EMAIL_CAN_NOT_BE_UPDATED: t("auth.errors.emailCanNotBeUpdated"),
-		EMAIL_NOT_VERIFIED: t("auth.errors.emailNotVerified"),
-		FAILED_TO_GET_USER_INFO: t("auth.errors.failedToGetUserInfo"),
-		ID_TOKEN_NOT_SUPPORTED: t("auth.errors.idTokenNotSupported"),
-		PASSWORD_TOO_LONG: t("auth.errors.passwordTooLong"),
-		PASSWORD_TOO_SHORT: t("auth.errors.passwordTooShort"),
-		PROVIDER_NOT_FOUND: t("auth.errors.providerNotFound"),
-		SOCIAL_ACCOUNT_ALREADY_LINKED: t(
-			"auth.errors.socialAccountAlreadyLinked",
-		),
-		USER_EMAIL_NOT_FOUND: t("auth.errors.userEmailNotFound"),
-		USER_ALREADY_EXISTS: t("auth.errors.userAlreadyExists"),
-		INVALID_INVITATION: t("auth.errors.invalidInvitation"),
-		SESSION_EXPIRED: t("auth.errors.sessionExpired"),
-		FAILED_TO_UNLINK_LAST_ACCOUNT: t(
-			"auth.errors.failedToUnlinkLastAccount",
-		),
-		ACCOUNT_NOT_FOUND: t("auth.errors.accountNotFound"),
+	const authErrorMessages: Partial<Record<keyof AuthClientErrorCodes, string>> = {
+		INVALID_EMAIL_OR_PASSWORD: "Invalid email or password",
+		USER_NOT_FOUND: "User not found",
+		FAILED_TO_CREATE_USER: "Failed to create user",
+		FAILED_TO_CREATE_SESSION: "Failed to create session",
+		FAILED_TO_UPDATE_USER: "Failed to update user",
+		FAILED_TO_GET_SESSION: "Failed to get session",
+		INVALID_PASSWORD: "Invalid password",
+		INVALID_EMAIL: "Invalid email",
+		INVALID_TOKEN: "Invalid token",
+		CREDENTIAL_ACCOUNT_NOT_FOUND: "Account not found",
+		EMAIL_CAN_NOT_BE_UPDATED: "Email cannot be updated",
+		EMAIL_NOT_VERIFIED: "Email not verified",
+		FAILED_TO_GET_USER_INFO: "Failed to get user info",
+		ID_TOKEN_NOT_SUPPORTED: "ID token not supported",
+		PASSWORD_TOO_LONG: "Password is too long",
+		PASSWORD_TOO_SHORT: "Password is too short",
+		PROVIDER_NOT_FOUND: "Provider not found",
+		SOCIAL_ACCOUNT_ALREADY_LINKED: "Account not found",
+		USER_EMAIL_NOT_FOUND: "User email not found",
+		USER_ALREADY_EXISTS: "User already exists",
+		INVALID_INVITATION: "Invalid invitation",
+		SESSION_EXPIRED: "Session expired",
+		FAILED_TO_UNLINK_LAST_ACCOUNT: "Account not found",
+		ACCOUNT_NOT_FOUND: "Account not found",
 	};
 
 	const getAuthErrorMessage = (errorCode: string | undefined) => {
 		return (
 			authErrorMessages[errorCode as keyof typeof authErrorMessages] ||
-			t("auth.errors.unknown")
+			"An unknown error occurred"
 		);
 	};
 

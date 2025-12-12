@@ -15,8 +15,19 @@ import { router } from "./orpc/router";
 
 export const app = new Hono()
     .basePath("/api")
-    // Logger middleware
-    .use(honoLogger((message) => logger.info(message)))
+    // Logger middleware (plain text, no colors)
+    .use(honoLogger((message) => {
+        // Strip ANSI color codes and CSS styling from message
+        const cleanMessage = message
+            .replace(/%[a-z]%c/g, '')
+            .replace(/\x1b\[[0-9;]*m/g, '')
+            .replace(/background:[^;]+;?/g, '')
+            .replace(/border-radius:[^;]+;?/g, '')
+            .replace(/color:[^;]+;?/g, '')
+            .replace(/font-weight:[^;]+;?/g, '')
+            .replace(/padding:[^;]+;?/g, '');
+        logger.info(cleanMessage.trim());
+    }))
     // Cors middleware
     .use(
         cors({

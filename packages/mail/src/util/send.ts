@@ -8,7 +8,6 @@ import { getTemplate } from "./templates";
 export async function sendEmail<T extends TemplateId>(
 	params: {
 		to: string;
-		locale?: keyof typeof config.i18n.locales;
 	} & (
 		| {
 				templateId: T;
@@ -24,7 +23,8 @@ export async function sendEmail<T extends TemplateId>(
 		  }
 	),
 ) {
-	const { to, locale = config.i18n.defaultLocale } = params;
+	const { to } = params;
+	const locale = 'en' as const;
 
 	let html: string;
 	let text: string;

@@ -6,9 +6,7 @@ import type { MetadataRoute } from "next";
 import { docsSource } from "./docs-source";
 
 const baseUrl = getBaseUrl();
-const locales = config.i18n.enabled
-	? Object.keys(config.i18n.locales)
-	: [config.i18n.defaultLocale];
+const locales = [config.i18n.defaultLocale];
 
 const staticMarketingPages = ["", "/changelog", "/contact"];
 

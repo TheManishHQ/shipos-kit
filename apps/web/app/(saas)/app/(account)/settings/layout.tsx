@@ -11,10 +11,8 @@ import {
 	TriangleAlertIcon,
 } from "lucide-react";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 import type { PropsWithChildren } from "react";
 export default async function SettingsLayout({ children }: PropsWithChildren) {
-	const t = await getTranslations();
 	const session = await getSession();
 
 	if (!session) {
@@ -23,7 +21,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 
 	const menuItems = [
 		{
-			title: t("settings.menu.account.title"),
+			title: "Account Settings",
 			avatar: (
 				<UserAvatar
 					name={session.user.name ?? ""}
@@ -32,19 +30,19 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 			),
 			items: [
 				{
-					title: t("settings.menu.account.general"),
+					title: "General",
 					href: "/app/settings/general",
 					icon: <SettingsIcon className="size-4 opacity-50" />,
 				},
 				{
-					title: t("settings.menu.account.security"),
+					title: "Security",
 					href: "/app/settings/security",
 					icon: <LockKeyholeIcon className="size-4 opacity-50" />,
 				},
 				...(config.users.enableBilling
 					? [
 							{
-								title: t("settings.menu.account.billing"),
+								title: "Billing",
 								href: "/app/settings/billing",
 								icon: (
 									<CreditCardIcon className="size-4 opacity-50" />
@@ -53,7 +51,7 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 						]
 					: []),
 				{
-					title: t("settings.menu.account.dangerZone"),
+					title: "Danger Zone",
 					href: "/app/settings/danger-zone",
 					icon: <TriangleAlertIcon className="size-4 opacity-50" />,
 				},
@@ -64,8 +62,8 @@ export default async function SettingsLayout({ children }: PropsWithChildren) {
 	return (
 		<>
 			<PageHeader
-				title={t("settings.account.title")}
-				subtitle={t("settings.account.subtitle")}
+				title="Account Settings"
+				subtitle="Manage your account settings and preferences."
 			/>
 			<SidebarContentLayout
 				sidebar={<SettingsMenu menuItems={menuItems} />}

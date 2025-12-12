@@ -9,7 +9,7 @@ export const docsSource = loader({
 	baseUrl: "/docs",
 	i18n: {
 		defaultLanguage: config.i18n.defaultLocale,
-		languages: Object.keys(config.i18n.locales),
+		languages: [config.i18n.defaultLocale],
 	},
 	source: createMDXSource(allDocs, allDocsMetas),
 	icon(icon) {

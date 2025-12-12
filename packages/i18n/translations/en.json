@@ -4,6 +4,191 @@
 		"error": "An error occurred",
 		"success": "Success"
 	},
+	"auth": {
+		"login": {
+			"title": "Sign In",
+			"subtitle": "Welcome back! Please sign in to your account.",
+			"modes": {
+				"password": "Password",
+				"magicLink": "Magic Link"
+			},
+			"submit": "Sign In",
+			"sendMagicLink": "Send Magic Link",
+			"continueWith": "Or continue with",
+			"loginWithPasskey": "Sign in with Passkey",
+			"forgotPassword": "Forgot password?",
+			"dontHaveAnAccount": "Don't have an account?",
+			"createAnAccount": "Create an account",
+			"hints": {
+				"linkSent": {
+					"title": "Check your email",
+					"message": "We've sent you a magic link. Please check your inbox and click the link to sign in."
+				}
+			},
+			"errors": {
+				"invalidEmailOrPassword": "Invalid email or password",
+				"userNotFound": "User not found",
+				"failedToCreateUser": "Failed to create user",
+				"failedToCreateSession": "Failed to create session",
+				"failedToUpdateUser": "Failed to update user",
+				"failedToGetSession": "Failed to get session",
+				"invalidPassword": "Invalid password",
+				"invalidEmail": "Invalid email",
+				"invalidToken": "Invalid token",
+				"emailCanNotBeUpdated": "Email cannot be updated",
+				"emailNotVerified": "Email not verified",
+				"failedToGetUserInfo": "Failed to get user info",
+				"idTokenNotSupported": "ID token not supported",
+				"passwordTooLong": "Password is too long",
+				"passwordTooShort": "Password is too short",
+				"providerNotFound": "Provider not found",
+				"userEmailNotFound": "User email not found",
+				"userAlreadyExists": "User already exists",
+				"invalidInvitation": "Invalid invitation",
+				"sessionExpired": "Session expired",
+				"accountNotFound": "Account not found",
+				"unknown": "An unknown error occurred"
+			}
+		},
+		"signup": {
+			"title": "Create Account",
+			"message": "Get started by creating your account.",
+			"name": "Name",
+			"email": "Email",
+			"password": "Password",
+			"submit": "Create Account",
+			"alreadyHaveAccount": "Already have an account?",
+			"signIn": "Sign in",
+			"hints": {
+				"verifyEmail": "Please check your email to verify your account."
+			}
+		},
+		"forgotPassword": {
+			"title": "Forgot Password",
+			"message": "Enter your email address and we'll send you a link to reset your password.",
+			"email": "Email",
+			"submit": "Send Reset Link",
+			"backToSignin": "Back to sign in",
+			"hints": {
+				"linkSent": {
+					"title": "Check your email",
+					"message": "We've sent you a password reset link. Please check your inbox."
+				}
+			}
+		},
+		"resetPassword": {
+			"title": "Reset Password",
+			"message": "Enter your new password below.",
+			"newPassword": "New Password",
+			"submit": "Reset Password",
+			"backToSignin": "Back to sign in",
+			"hints": {
+				"success": "Your password has been reset successfully."
+			}
+		},
+		"verify": {
+			"title": "Verify Your Account",
+			"message": "Please enter the verification code sent to your email.",
+			"code": "Verification Code",
+			"submit": "Verify",
+			"backToSignin": "Back to sign in"
+		}
+	},
+	"settings": {
+		"save": "Save",
+		"account": {
+			"title": "Account Settings",
+			"subtitle": "Manage your account settings and preferences.",
+			"changeName": {
+				"title": "Name",
+				"notifications": {
+					"success": "Name updated successfully",
+					"error": "Failed to update name"
+				}
+			},
+			"changeEmail": {
+				"title": "Email",
+				"description": "Update your email address. You'll need to verify the new email.",
+				"notifications": {
+					"success": "Verification email sent. Please check your inbox.",
+					"error": "Failed to update email"
+				}
+			},
+			"avatar": {
+				"title": "Profile Picture",
+				"description": "Upload a profile picture for your account.",
+				"notifications": {
+					"success": "Profile picture updated successfully",
+					"error": "Failed to update profile picture"
+				}
+			},
+			"deleteAccount": {
+				"title": "Delete Account",
+				"description": "Permanently delete your account and all associated data. This action cannot be undone.",
+				"confirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+				"submit": "Delete Account",
+				"notifications": {
+					"success": "Account deleted successfully",
+					"error": "Failed to delete account"
+				}
+			},
+			"security": {
+				"title": "Security Settings",
+				"changePassword": {
+					"title": "Change Password",
+					"notifications": {
+						"success": "Password updated successfully"
+					}
+				},
+				"setPassword": {
+					"title": "Set Password",
+					"description": "Set a password for your account to enable password-based login.",
+					"submit": "Set Password",
+					"notifications": {
+						"success": "Password set successfully",
+						"error": "Failed to set password"
+					}
+				},
+				"connectedAccounts": {
+					"title": "Connected Accounts"
+				},
+				"activeSessions": {
+					"title": "Active Sessions"
+				}
+			}
+		},
+		"menu": {
+			"account": {
+				"title": "Account",
+				"general": "General",
+				"security": "Security",
+				"billing": "Billing",
+				"dangerZone": "Danger Zone"
+			}
+		},
+		"billing": {
+			"title": "Billing Settings"
+		}
+	},
+	"app": {
+		"menu": {
+			"start": "Start",
+			"aiChatbot": "AI Chatbot",
+			"settings": "Settings",
+			"admin": "Admin"
+		},
+		"userMenu": {
+			"accountSettings": "Account Settings",
+			"colorMode": "Color Mode",
+			"documentation": "Documentation",
+			"home": "Home",
+			"logout": "Logout"
+		}
+	},
+	"start": {
+		"welcome": "Welcome back, {name}!",
+		"subtitle": "Here's what's happening with your account today."
+	},
 	"mail": {
 		"common": {
 			"openLinkInBrowser": "If you want to open the link in a different browser than your default one, copy and paste this link:",

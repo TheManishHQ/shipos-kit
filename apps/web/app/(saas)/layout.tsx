@@ -1,20 +1,16 @@
+import { redirect } from "next/navigation";
+import type { PropsWithChildren } from "react";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { config } from "@shipos/config";
 import { SessionProvider } from "@saas/auth/components/SessionProvider";
 import { sessionQueryKey } from "@saas/auth/lib/api";
-import { getOrganizationList, getSession } from "@saas/auth/lib/server";
+import { getSession } from "@saas/auth/lib/server";
 import { ConfirmationAlertProvider } from "@saas/shared/components/ConfirmationAlertProvider";
 import { Document } from "@shared/components/Document";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { getServerQueryClient } from "@shared/lib/server";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { redirect } from "next/navigation";
-import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
-import type { PropsWithChildren } from "react";
 
 export default async function SaaSLayout({ children }: PropsWithChildren) {
-	const locale = await getLocale();
-	const messages = await getMessages();
 	const session = await getSession();
 
 	if (!session) {
@@ -37,16 +33,14 @@ export default async function SaaSLayout({ children }: PropsWithChildren) {
 	}
 
 	return (
-		<Document locale={locale}>
-			<NextIntlClientProvider messages={messages}>
-				<HydrationBoundary state={dehydrate(queryClient)}>
-					<SessionProvider>
-						<ConfirmationAlertProvider>
-							{children}
-						</ConfirmationAlertProvider>
-					</SessionProvider>
-				</HydrationBoundary>
-			</NextIntlClientProvider>
+		<Document>
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<SessionProvider>
+					<ConfirmationAlertProvider>
+						{children}
+					</ConfirmationAlertProvider>
+				</SessionProvider>
+			</HydrationBoundary>
 		</Document>
 	);
 }

@@ -6,7 +6,6 @@ import { useSession } from "@saas/auth/hooks/use-session";
 import { SettingsItem } from "@saas/shared/components/SettingsItem";
 import { Button } from "@ui/components/button";
 import { Input } from "@ui/components/input";
-import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -19,7 +18,6 @@ type FormSchema = z.infer<typeof formSchema>;
 
 export function ChangeEmailForm() {
 	const { user, reloadSession } = useSession();
-	const t = useTranslations();
 
 	const form = useForm<FormSchema>({
 		resolver: zodResolver(formSchema),
@@ -34,19 +32,19 @@ export function ChangeEmailForm() {
 		});
 
 		if (error) {
-			toast.error(t("settings.account.changeEmail.notifications.error"));
+			toast.error("Failed to update email");
 			return;
 		}
 
-		toast.success(t("settings.account.changeEmail.notifications.success"));
+		toast.success("Verification email sent. Please check your inbox.");
 
 		reloadSession();
 	});
 
 	return (
 		<SettingsItem
-			title={t("settings.account.changeEmail.title")}
-			description={t("settings.account.changeEmail.description")}
+			title="Email"
+			description="Update your email address. You'll need to verify the new email."
 		>
 			<form
 				onSubmit={(e) => {
@@ -67,7 +65,7 @@ export function ChangeEmailForm() {
 							)
 						}
 					>
-						{t("settings.save")}
+						Save
 					</Button>
 				</div>
 			</form>

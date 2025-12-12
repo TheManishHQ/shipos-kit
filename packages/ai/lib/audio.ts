@@ -1,4 +1,4 @@
-import { experimental_generateTranscription as generateTranscription } from "ai";
+import { experimental_transcribe } from "ai";
 import { audioModel } from "../index";
 
 export interface TranscribeAudioOptions {
@@ -10,7 +10,7 @@ export interface TranscribeAudioOptions {
 }
 
 /**
- * Transcribe audio using Whisper-1
+ * Transcribe audio using the configured audio model
  */
 export async function transcribeAudio(
 	options: TranscribeAudioOptions,
@@ -39,19 +39,29 @@ export async function transcribeAudio(
 		temperature = 0,
 	} = options;
 
-	const result = await generateTranscription({
+	// Convert File/Blob to DataContent format expected by the AI SDK
+	const audioBuffer = await audioFile.arrayBuffer();
+	const audioData = Buffer.from(audioBuffer);
+
+	const result = await experimental_transcribe({
 		model: audioModel,
-		file: audioFile,
-		language,
-		prompt,
-		response_format: responseFormat,
-		temperature,
+		audio: {
+			type: "audio",
+			data: audioData,
+			mimeType: audioFile.type || "audio/wav",
+		},
+		providerOptions: {
+			openai: {
+				language,
+				prompt,
+				response_format: responseFormat,
+				temperature,
+			},
+		},
 	});
 
 	return {
 		text: result.text,
-		language: result.language,
-		duration: result.duration,
 		segments: result.segments,
 	};
 }

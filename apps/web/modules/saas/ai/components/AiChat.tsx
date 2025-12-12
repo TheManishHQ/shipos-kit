@@ -15,13 +15,11 @@ import { Button } from "@ui/components/button";
 import { Textarea } from "@ui/components/textarea";
 import { cn } from "@ui/lib";
 import { EllipsisIcon, PlusIcon, SendIcon } from "lucide-react";
-import { useFormatter } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export function AiChat() {
-	const formatter = useFormatter();
 	const queryClient = useQueryClient();
 	const [input, setInput] = useState("");
 	const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -198,13 +196,10 @@ export function AiChat() {
 											"Untitled chat"}
 									</span>
 									<small className="block font-normal">
-										{formatter.dateTime(
-											new Date(chat.createdAt),
-											{
-												dateStyle: "short",
-												timeStyle: "short",
-											},
-										)}
+										{new Intl.DateTimeFormat("en-US", {
+											dateStyle: "short",
+											timeStyle: "short",
+										}).format(new Date(chat.createdAt))}
 									</small>
 								</span>
 							</Button>

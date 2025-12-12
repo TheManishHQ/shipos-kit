@@ -1,7 +1,12 @@
 import { config } from "@shipos/config";
+import { SessionProvider } from "@saas/auth/components/SessionProvider";
+import { sessionQueryKey } from "@saas/auth/lib/api";
 import { getSession } from "@saas/auth/lib/server";
 import { OnboardingForm } from "@saas/onboarding/components/OnboardingForm";
 import { AuthWrapper } from "@saas/shared/components/AuthWrapper";
+import { Document } from "@shared/components/Document";
+import { getServerQueryClient } from "@shared/lib/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -23,9 +28,22 @@ export default async function OnboardingPage() {
 		redirect("/app");
 	}
 
+	const queryClient = getServerQueryClient();
+
+	await queryClient.prefetchQuery({
+		queryKey: sessionQueryKey,
+		queryFn: () => session,
+	});
+
 	return (
-		<AuthWrapper>
-			<OnboardingForm />
-		</AuthWrapper>
+		<Document>
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<SessionProvider>
+					<AuthWrapper>
+						<OnboardingForm />
+					</AuthWrapper>
+				</SessionProvider>
+			</HydrationBoundary>
+		</Document>
 	);
 }

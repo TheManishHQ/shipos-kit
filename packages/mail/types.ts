@@ -1,5 +1,3 @@
-import type { Locale } from "@shipos/i18n";
-
 export interface SendEmailParams {
 	to: string;
 	subject: string;
@@ -14,6 +12,6 @@ export interface MailProvider {
 }
 
 export type BaseMailProps = {
-	locale: Locale;
+	locale: 'en';
 	translations: any;
 };

@@ -25,13 +25,14 @@ const posts = defineCollection({
 		tags: z.array(z.string()),
 		published: z.boolean(),
 	}),
-	transform: async (document, context) => {
+		transform: async (document, context) => {
 		const body = await compileMDX(context, document, {
 			rehypePlugins: [
 				[
 					rehypeShiki,
 					{
 						theme: "nord",
+						langs: ["env", "bash", "typescript", "javascript", "json", "tsx", "jsx", "css", "html", "markdown", "yaml", "yml"],
 					},
 				],
 			],
